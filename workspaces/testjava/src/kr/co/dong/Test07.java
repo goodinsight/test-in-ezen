@@ -2,7 +2,7 @@ package kr.co.dong;
 
 import java.util.Scanner;
 
-public class Test04 {
+public class Test07 {
 	public static void main(String[] args) {
 		int ringNum = 3;
 		int[] str1 = null;
