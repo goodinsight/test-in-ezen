@@ -20,7 +20,36 @@ public class Test07 {
 		printStr(str2);
 		printStr(str3);
 		System.out.println();
-		hanoiTower(str1, str2, str3, ringNum);
+//		hanoiTower(str1, str2, str3, ringNum);
+		ringMoveUp(str1, str2, str3);
+		printStr(str1);
+		printStr(str2);
+		printStr(str3);
+		System.out.println();
+		ringMoveUp(str1, str2, str3);
+		printStr(str1);
+		printStr(str2);
+		printStr(str3);
+		System.out.println();
+		ringMoveUp(str1, str2, str3);
+		printStr(str1);
+		printStr(str2);
+		printStr(str3);
+		System.out.println();
+		ringMoveUp(str1, str2, str3);
+		printStr(str1);
+		printStr(str2);
+		printStr(str3);
+		System.out.println();
+		ringMoveUp(str1, str2, str3);
+		printStr(str1);
+		printStr(str2);
+		printStr(str3);
+		System.out.println();
+		ringMoveUp(str1, str2, str3);
+		printStr(str1);
+		printStr(str2);
+		printStr(str3);
 
 	}
 
@@ -52,7 +81,7 @@ public class Test07 {
 		str = tmp;
 		return str;
 	}
-	
+
 	private static void ringMove(int[] a, int[] b) {
 		move: for (int i = 0; i < a.length; i++) {
 			if (a[i] != 0) {
@@ -76,45 +105,61 @@ public class Test07 {
 	}
 
 	private static void ringMoveUp(int[] str1, int[] str2, int[] str3) {
-		a: for (int i = 0; i < str1.length - 1; i++) {
-			if (str1[i] != 0) {
-				for (int j = 0; j <= str2.length - 1; j++) {
-					if (str2[j] != 0) {
-						if (str2[j - 1] > str1[i]) {
-							int[] tmp = new int[1];
-							tmp[0] = str2[j - 1];
-							str2[j - 1] = str1[i];
-							str1[i] = tmp[0];
-							break a;
-						} else if (str2[j - 1] > str1[i] || j == str2.length - 1) {
-							int[] tmp = new int[1];
-							tmp[0] = str2[j];
-							str2[j] = str1[i];
-							str1[i] = tmp[0];
-							break a;
-						} else {
-							for (int k = 0; k <= str3.length - 1; k++) {
-								if (str3[k] != 0) {
-									int[] tmp = new int[1];
-									tmp[0] = str3[k - 1];
-									str3[k - 1] = str1[i];
-									str1[i] = tmp[0];
-									break a;
-								} else if (k == str3.length - 1) {
-									int[] tmp = new int[1];
-									tmp[0] = str3[k];
-									str3[k] = str1[i];
-									str1[i] = tmp[0];
-									break a;
+		existInStr1: for (int a : str1) {
+			if (a != 0) {
+
+				for (int b : str2) {
+					if (b != 0) {
+
+						if (a < b) {
+							ringMove(str1, str2);
+							break existInStr1;
+						} else if (a > b) {
+
+							for (int c : str3) {
+								if (c != 0) {
+									if (a < c) {
+										ringMove(str1, str3);
+										break existInStr1;
+									} else if (a > c) {
+										if (b < c) {
+											ringMove(str2, str3);
+											break existInStr1;
+										} else {
+											ringMove(str3, str2);
+											break existInStr1;
+										}
+									}
+								} else if (str3[str3.length - 1] == 0) {
+									ringMove(str1, str3);
+									break existInStr1;
 								}
 							}
 						}
-
+					} else if (str2[str2.length - 1] == 0) {
+						ringMove(str1, str2);
+						break existInStr1;
 					}
+				}
+			} else if (str1[str1.length - 1] == 0) {
+				existInStr2: for (int b : str2) {
+					if (b != 0) {
+						for (int c : str3) {
+							if (c != 0) {
+								if (b < c) {
+									ringMove(str2, str3);
+									break existInStr2;
+								} else {
+									ringMove(str3, str1);
+									break existInStr2;
+								}
+							}
+						}
+					}
+
 				}
 			}
 		}
-
 	}
 
 	private static void hanoiTower(int[] str1, int[] str2, int[] str3, int ringNum) {
