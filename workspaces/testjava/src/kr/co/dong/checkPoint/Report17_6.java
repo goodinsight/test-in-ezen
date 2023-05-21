@@ -2,56 +2,32 @@ package kr.co.dong.checkPoint;
 
 import java.util.Scanner;
 
-public class Report17_5 {
+public class Report17_6 {
 	public static void main(String[] args) {
-//		1. 음료 자판기를 구현하자
-//		2. 음료 3종류 종류 / 가격 별도 / 재고수
-//		3. 시작과 동시에 화면에 메뉴를 보여준다.
-//		3-1 음료의 종류와 가격, 재고수, 거스름돈 반환, 돈입력 등
-//			99. 자판기 종료
-//		4. 99이외의 숫자인 경우 화면메뉴 보여주기
 
 		boolean power = false; // 전원
-//		메뉴 입력값, 받은 돈, 가격1,2, 3, 거스름돈
 		Scanner scan = new Scanner(System.in);
-
-		int vendingMachingSize = 4;	// 음료 종류 수
+		
+		int vendingMachineSize = 4;	// 음료 종류 수
+		Beverage b = new Beverage(vendingMachineSize); //Beverage 객체 생성
+		
+		b.dName = new String[]{"콜라","커피","물","사이다"}; // 음료 이름 초기화
+		b.dPrice = new int[]{1000, 1500, 2000, 2500}; // 음료 가격 초기화
+		b.dAmount = new int[]{5, 5, 5, 5};	// 음료 재고 초기화
 		
 		String drink = "음료재고";
 		String money = "잔돈재고";
 		String drinkName = "음료이름 및 가격";
-		String[] dName = new String[vendingMachingSize];
-		dName[0] = "콜라"; // 음료 이름 초기 세팅
-		dName[1] = "커피";
-		dName[2] = "물";
-		dName[3] = "사이다";
 		
 		String[] message = new String[2];
 		message[0] = ""; // 안내 메세지 초기값 null 안보이게
 		message[1] = "";
 
-		int[] dPrice = new int[vendingMachingSize];
-		dPrice[0] = 1000; // 음료 가격 초기 세팅
-		dPrice[1] = 1500;
-		dPrice[2] = 2000;
-		dPrice[3] = 2500;
-
-		int[] dAmount = new int[vendingMachingSize];
-		dAmount[0] = 5;	// 음료 재고 초기 세팅
-		dAmount[1] = 5;
-		dAmount[2] = 5;
-		dAmount[3] = 5;
-
 		int coin = 0;	// 잔액
 //		잔돈 보유현황
 		int[] moneyCount = new int[6];
 		int[] moneyChangeCount = new int[6];	//거스름돈 계산시 필요 변수
-		moneyCount[0] = 1; // 잔돈 금액권별 초기 세팅
-		moneyCount[1] = 2;
-		moneyCount[2] = 2;
-		moneyCount[3] = 2;
-		moneyCount[4] = 2;
-		moneyCount[5] = 5;
+		moneyCount = new int[] {1, 2, 2, 2, 2, 5}; // 잔돈 금액권별 초기 세팅
 		
 		int beverage = 0;
 
@@ -61,15 +37,15 @@ public class Report17_5 {
 		int adminMode = 0;	// 재고 모두 소진시 빠져나올때
 		int totalIncome = 0;	// 총 매출액
 		
-		int[] drinkSoldCount = new int[vendingMachingSize];	// 음료별 판매 갯수
+		int[] drinkSoldCount = new int[vendingMachineSize];	// 음료별 판매 갯수
 		
 		sys:
 		while (!power) {
 //			모든 재고 소진시 이용불가
 			able:
 			while(true) {
-				for (int i = 0; i<vendingMachingSize; i++) {
-					if(dAmount[i] == 0 && adminMode == 0) {
+				for (int i = 0; i<vendingMachineSize; i++) {
+					if(b.dAmount[i] == 0 && adminMode == 0) {
 						continue;
 					}else {
 						break able;
@@ -81,51 +57,22 @@ public class Report17_5 {
 					adminMode = 1;
 				}
 			}
-
 //			남은 재고 중 가장 가격이 낮은 음료보다 금액이 적을 경우 다시 처음 메뉴로
-			boolean possible = true;
-			for (int i = 0; i < vendingMachingSize; i++) {
-				int drinkCountMin = 100;
-				int countNum=0;
-				for (int j =0; j< vendingMachingSize; j++) {
-					if (dAmount[j] !=0 && (dAmount[j] < drinkCountMin)) {
-						drinkCountMin = dAmount[j];
-						countNum=j;
-					}
-				}
-				if(coin >= dPrice[countNum])
-					possible = false;
-			}
+			boolean possible = possible(vendingMachineSize, b, coin);
 	
 			if (possible) {
+				
 				message[0] = "coin을 (더)넣어주세요";
-//		메뉴화면 coin
-				System.out.println("====================================================================================");
-				System.out.println();
-				System.out.println("                                   <음료 자판기>                                       ");
-				System.out.println();
-				System.out.printf("                                                               현재 잔액은 :  %d원", coin);
-				System.out.println();
-				System.out.println();
-				for (int i = 0; i < vendingMachingSize; i++) {
-					System.out.printf("  %d. %s : %d원(수량:%d)     ",i+1,dName[i],dPrice[i],dAmount[i]);
-					if(i % 3 == 2) {
-						System.out.println();
-					}
-				}
-				System.out.println();
-				System.out.println();
-				System.out.printf("                                                          잔액 반환을 원하시면 %d번을 누르세요%n",vendingMachingSize+1);
-				System.out.println();
-				System.out.printf("<안내> " + message[0] + message[1] + "%n");
-				System.out.println("                                                                 <관리자 모드: 비번을 입력>");
-				System.out.println("------------------------------------------------------------------------------------");
+//		메뉴화면
+				showMenu(vendingMachineSize, b, coin, message);
+				
 //				input coin
+			
 				System.out.println("얼마를 넣으시겠습니까?(현행 화폐와 동전만 사용 가능) :");
 				int tmp = scan.nextInt();
 
 				//				return of change
-				if (tmp == vendingMachingSize+1) {
+				if (tmp == vendingMachineSize+1) {
 					System.out.printf("잔액(거스름돈) %d원을 반환합니다.%n", coin);
 					totalIncome -= coin;
 					int num = 100000;
@@ -207,8 +154,8 @@ public class Report17_5 {
 							System.out.printf("                                                     현재까지 총 수입은 :  %d원%n", totalIncome);
 							System.out.println();
 							System.out.println("                       <음료별 판매현황>                      ");
-							for (int i = 0; i < vendingMachingSize; i++) {
-								System.out.printf("  %d. %s : %d개     ",i+1,dName[i],drinkSoldCount[i]);
+							for (int i = 0; i < vendingMachineSize; i++) {
+								System.out.printf("  %d. %s : %d개     ",i+1,b.dName[i],drinkSoldCount[i]);
 								if(i % 3 == 2) {
 									System.out.println();
 								}
@@ -216,8 +163,8 @@ public class Report17_5 {
 							System.out.println();
 							System.out.println();
 							System.out.println("                       <음료별 판매수익>                    ");
-							for (int i = 0; i < vendingMachingSize; i++) {
-								System.out.printf("  %d. %s : %d원     ",i+1,dName[i],drinkSoldCount[i]*dPrice[i]);
+							for (int i = 0; i < vendingMachineSize; i++) {
+								System.out.printf("  %d. %s : %d원     ",i+1,b.dName[i],drinkSoldCount[i]*b.dPrice[i]);
 								if(i % 3 == 2) {
 									System.out.println();
 								}
@@ -225,8 +172,8 @@ public class Report17_5 {
 							System.out.println();
 							System.out.println();
 							System.out.println("                       <음료별 남은 재고>                    ");
-							for (int i = 0; i < vendingMachingSize; i++) {
-								System.out.printf("  %d. %s : %d개     ",i+1,dName[i],dAmount[i]);
+							for (int i = 0; i < vendingMachineSize; i++) {
+								System.out.printf("  %d. %s : %d개     ",i+1,b.dName[i],b.dAmount[i]);
 								if(i % 3 == 2) {
 									System.out.println();
 								}
@@ -245,19 +192,19 @@ public class Report17_5 {
 							switch (choice) {
 							case 1:
 								System.out.printf("어떤 음료를 추가/수정 하시겠습니까? (관리자 모드 종료:%d, 자판기 전원off:%d)%n", adminOff, sysOff);
-								for (int i = 0; i < vendingMachingSize; i++) {
-									System.out.printf("  %d. %s          ",i+1,dName[i]); 
+								for (int i = 0; i < vendingMachineSize; i++) {
+									System.out.printf("  %d. %s          ",i+1,b.dName[i]); 
 								}
 								System.out.println();
 								beverage = scan.nextInt();
-								for (int i = 0; i < vendingMachingSize; i++) {
+								for (int i = 0; i < vendingMachineSize; i++) {
 									if (beverage == (i+1)) {
-										System.out.printf("%s 를 몇개 추가하시겠습니까? 감소를 원하면 음수로 입력하세요 : %n", dName[i]);
-										dAmount[i] += scan.nextInt();
-										System.out.printf("%s 가 추가(수정)되어 재고가 %d가 되었습니다.%n", dName[i], dAmount[i]);
+										System.out.printf("%s 를 몇개 추가하시겠습니까? 감소를 원하면 음수로 입력하세요 : %n", b.dName[i]);
+										b.dAmount[i] += scan.nextInt();
+										System.out.printf("%s 가 추가(수정)되어 재고가 %d가 되었습니다.%n", b.dName[i], b.dAmount[i]);
 										beverage = 0;
 //										message , 매진 안내 지우기
-										message[1] = message[1].replace(" "+dName[i]+" 매진","");
+										message[1] = message[1].replace(" "+b.dName[i]+" 매진","");
 									}
 								}
 								if(beverage == adminOff){
@@ -268,8 +215,8 @@ public class Report17_5 {
 									power = true;
 									break sys;
 								}
-								if(beverage < 0 && beverage != adminOff && beverage != sysOff || beverage > vendingMachingSize && beverage != adminOff && beverage != sysOff) {
-									System.out.printf("잘못 입력하셨습니다. 1~%d번 중 하나를 고르세요%n", vendingMachingSize);
+								if(beverage < 0 && beverage != adminOff && beverage != sysOff || beverage > vendingMachineSize && beverage != adminOff && beverage != sysOff) {
+									System.out.printf("잘못 입력하셨습니다. 1~%d번 중 하나를 고르세요%n", vendingMachineSize);
 								}
 								break;
 
@@ -305,21 +252,21 @@ public class Report17_5 {
 								break;
 							case 3:
 								System.out.printf("어떤 음료를 변경 하시겠습니까? (관리자 모드 종료:%d, 자판기 전원off:%d)%n", adminOff, sysOff);
-								for (int i = 0; i < vendingMachingSize; i++) {
-									System.out.printf("  %d. %s          ",i+1,dName[i]); 
+								for (int i = 0; i < vendingMachineSize; i++) {
+									System.out.printf("  %d. %s          ",i+1,b.dName[i]); 
 								}
 								System.out.println();
 								beverage = scan.nextInt();
-								for (int i = 0; i < vendingMachingSize; i++) {
+								for (int i = 0; i < vendingMachineSize; i++) {
 									if (beverage == (i+1)) {
-										System.out.printf("%s 에서 바꾸고 싶은 이름을 입력하세요 : %n", dName[i]);
-										String tmp1 = dName[i];
-										dName[i] = scan.next();
-										System.out.printf("%s 가 %s로 이름이 변경 되었습니다.%n", tmp1, dName[i]);
-										System.out.printf("%d원 에서 바꾸고 싶은 가격을 입력하세요 : %n", dPrice[i]);
-										int tmp2 = dPrice[i];
-										dPrice[i] = scan.nextInt();
-										System.out.printf("%d원 에서 %d원으로 가격이 변경 되었습니다.%n", tmp2, dPrice[i]);
+										System.out.printf("%s 에서 바꾸고 싶은 이름을 입력하세요 : %n", b.dName[i]);
+										String tmp1 = b.dName[i];
+										b.dName[i] = scan.next();
+										System.out.printf("%s 가 %s로 이름이 변경 되었습니다.%n", tmp1, b.dName[i]);
+										System.out.printf("%d원 에서 바꾸고 싶은 가격을 입력하세요 : %n", b.dPrice[i]);
+										int tmp2 = b.dPrice[i];
+										b.dPrice[i] = scan.nextInt();
+										System.out.printf("%d원 에서 %d원으로 가격이 변경 되었습니다.%n", tmp2, b.dPrice[i]);
 										
 										beverage = 0;
 										break;
@@ -333,8 +280,8 @@ public class Report17_5 {
 									power = true;
 									break sys;
 								}
-								if(beverage < 0 && beverage != adminOff && beverage != sysOff || beverage > vendingMachingSize && beverage != adminOff && beverage != sysOff) {
-									System.out.printf("잘못 입력하셨습니다. 1~%d번 중 하나를 고르세요%n", vendingMachingSize);
+								if(beverage < 0 && beverage != adminOff && beverage != sysOff || beverage > vendingMachineSize && beverage != adminOff && beverage != sysOff) {
+									System.out.printf("잘못 입력하셨습니다. 1~%d번 중 하나를 고르세요%n", vendingMachineSize);
 									break;
 								}
 							default:
@@ -356,46 +303,29 @@ public class Report17_5 {
 			} else {
 //		메뉴화면 choice
 				message[0] = "음료를 고르세요";
-				System.out.println("====================================================================================");
-				System.out.println(); 
-				System.out.println("                                       <음료 자판기>                                    ");
-				System.out.println();
-				System.out.printf("                                                                 현재 잔액은 :  %d원", coin);
-				System.out.println();
-				System.out.println();
-				for (int i = 0; i < vendingMachingSize; i++) {
-					System.out.printf("  %d. %s : %d원(수량:%d)     ",i+1,dName[i],dPrice[i],dAmount[i]);
-					if (i % 3 == 2) {
-						System.out.println();
-					}
-				}
-				System.out.println();
-				System.out.printf("                                                          잔액 반환을 원하시면 %d번을 누르세요%n",vendingMachingSize+1);
-				System.out.println();
-				System.out.printf("<안내> " + message[0] + message[1] + "%n");
-				System.out.println("------------------------------------------------------------------------------------");
+				showMenu(vendingMachineSize, b, coin, message);
 
-				if (beverage < 1 || beverage > vendingMachingSize) {
-					System.out.printf("무엇을 고르시겠습니까(1~%d)? : %n",vendingMachingSize);
+				if (beverage < 1 || beverage > vendingMachineSize) {
+					System.out.printf("무엇을 고르시겠습니까(1~%d)? : %n",vendingMachineSize);
 					beverage = scan.nextInt();
-					for (int i = 0; i < vendingMachingSize ; i++) {
+					for (int i = 0; i < vendingMachineSize ; i++) {
 						if(beverage == i+1) {
-							if (dAmount[i] <= 0) {
-								System.out.printf("%s 매진입니다. 다른메뉴를 선택하세요.%n",dName[i]);
+							if (b.dAmount[i] <= 0) {
+								System.out.printf("%s 매진입니다. 다른메뉴를 선택하세요.%n",b.dName[i]);
 								break;
 							}
 //							음료 선택시 잔액 감소
-							coin -= dPrice[i];
+							coin -= b.dPrice[i];
 //							잔액이 모자랄 경우
 							if (coin < 0) {
-								coin += dPrice[i];
+								coin += b.dPrice[i];
 								System.out.println("잔액이 모자랍니다.");
 //								코인을 추가할 것인지 물어보고 아니면 잔돈을 반환을 하도록 유도
 								while (true) {
-									System.out.printf("얼마를 넣으시겠습니까? : (잔돈 반환은 %d번)%n",vendingMachingSize+1);
+									System.out.printf("얼마를 넣으시겠습니까? : (잔돈 반환은 %d번)%n",vendingMachineSize+1);
 									int tmp = scan.nextInt();
 //							return of change
-									if (tmp == vendingMachingSize+1) {
+									if (tmp == vendingMachineSize+1) {
 										System.out.printf("잔액(거스름돈) %d원을 반환합니다.%n", coin);
 										totalIncome -= coin;
 										int num = 100000;
@@ -465,18 +395,18 @@ public class Report17_5 {
 								}
 							}
 //							음료가 나왔을 경우 재고 수량 조정
-							System.out.printf("**%s**가 나왔습니다.%n",dName[i]);
+							System.out.printf("**%s**가 나왔습니다.%n",b.dName[i]);
 							System.out.println();
-							dAmount[i]--;
+							b.dAmount[i]--;
 							drinkSoldCount[i]++;
 //							매진시 매진 안내
-							if (dAmount[i] <= 0) {
-								message[1] += ", "+dName[i]+" 매진";
+							if (b.dAmount[i] <= 0) {
+								message[1] += ", "+b.dName[i]+" 매진";
 							}
 							break;
 						}
 					}
-					if (beverage == vendingMachingSize+1) {
+					if (beverage == vendingMachineSize+1) {
 						System.out.printf("잔액(거스름돈) %d원을 반환합니다.%n", coin);
 						totalIncome -= coin;
 						int num = 100000;
@@ -510,15 +440,15 @@ public class Report17_5 {
 							moneyChangeCount[j] = 0;
 						}
 					}
-					if (beverage < 1 || beverage > vendingMachingSize) {
-						System.out.printf("잘못 입력하셨습니다. 1~%d번 중 하나를 고르세요%n", vendingMachingSize);
+					if (beverage < 1 || beverage > vendingMachineSize) {
+						System.out.printf("잘못 입력하셨습니다. 1~%d번 중 하나를 고르세요%n", vendingMachineSize);
 					}
 				}
 				beverage = 0;
 //				모든 재고 소진시 거스름돈 모두 반환 유도
 				int sumOfAmount = 0;
-				for (int i = 0; i < vendingMachingSize; i++) {
-					sumOfAmount += dAmount[i];
+				for (int i = 0; i < vendingMachineSize; i++) {
+					sumOfAmount += b.dAmount[i];
 				}
 				if (sumOfAmount == 0) {
 					System.out.println("모든 재고가 소진되었습니다. 자판기를 이용하실 수 없습니다.");
@@ -560,4 +490,72 @@ public class Report17_5 {
 		}
 		System.out.println("자판기 종료!!");
 	}
+
+
+	private static void showMenu(int vendingMachineSize, Beverage b, int coin, String[] message) {
+		// 메인 메뉴 화면
+		System.out.println("====================================================================================");
+		System.out.println();
+		System.out.println("                                   <음료 자판기>                                       ");
+		System.out.println();
+		System.out.printf("                                                               현재 잔액은 :  %d원", coin);
+		System.out.println();
+		System.out.println();
+		for (int i = 0; i < vendingMachineSize; i++) {
+			System.out.printf("  %d. %s : %d원(수량:%d)     ",i+1,b.dName[i],b.dPrice[i],b.dAmount[i]);
+			if(i % 3 == 2) {
+				System.out.println();
+			}
+		}
+		System.out.println();
+		System.out.println();
+		System.out.printf("                                                          잔액 반환을 원하시면 %d번을 누르세요%n",vendingMachineSize+1);
+		System.out.println();
+		System.out.printf("<안내> " + message[0] + message[1] + "%n");
+		System.out.println();
+		System.out.println("------------------------------------------------------------------------------------");
+		
+	}
+
+	private static boolean possible(int vendingMachineSize, Beverage b, int coin) {
+		// 남은 재고 중 가장 가격이 낮은 음료보다 금액이 적을 경우 다시 처음 메뉴로
+		for (int i = 0; i < vendingMachineSize; i++) {
+			int drinkCountMin = 100;
+			int countNum=0;
+			for (int j =0; j< vendingMachineSize; j++) {
+				if (b.dAmount[j] !=0 && (b.dAmount[j] < drinkCountMin)) {
+					drinkCountMin = b.dAmount[j];
+					countNum=j;
+				}
+			}
+			if(coin >= b.dPrice[countNum])
+				return false;
+		}
+		return true;
+		
+	}
 }
+class Beverage{
+	int vendingMachineSize;
+	
+	String[] dName;
+	int[] dPrice;
+	int[] dAmount;
+	
+	public Beverage() {
+	}
+	
+	public Beverage(int Size){
+		dName = new String[Size];
+		dPrice = new int[Size];
+		dAmount = new int[Size];
+	}
+	
+	void setVendingMachingSize(int Size) {
+		this.vendingMachineSize = Size;
+		dName = new String[this.vendingMachineSize];
+		dPrice = new int[this.vendingMachineSize];
+		dAmount = new int[this.vendingMachineSize];
+	}
+}
+

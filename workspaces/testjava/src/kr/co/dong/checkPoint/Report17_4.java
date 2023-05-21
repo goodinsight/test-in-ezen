@@ -48,7 +48,6 @@ public class Report17_4 {
 		int coin = 0;	// 잔액
 //		잔돈 보유현황
 		
-		String[] moneyList = {"5만원권", "1만원권", "5천원권", "1천원권", "5백원", "백원"};
 		int[] moneyCount = new int[6];
 		int[] moneyChangeCount = new int[6];	//거스름돈 계산시 필요 변수
 		moneyCount[0] = 1; // 잔돈 금액권별 초기 세팅
