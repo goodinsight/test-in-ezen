@@ -2,7 +2,7 @@ package kr.co.dong.checkPoint;
 
 import java.util.Scanner;
 
-public class Report17_6 {
+public class Report17_7 {
 	public static void main(String[] args) {
 
 		boolean power = false; // 전원
@@ -60,37 +60,9 @@ public class Report17_6 {
 				//				return of change
 				if (tmp == vendingMachineSize+1) {
 					System.out.printf("잔액(거스름돈) %d원을 반환합니다.%n", coin);
-					int num = 100000;
-					for (int i = 0; i <= 5; i++) {
-						if (i % 2 == 0) {
-							num /= 2;
-						} else {
-							num /= 5;
-						}
-						if (coin / num > 0) {
-							moneyChangeCount[i] = coin / num;
-							if (moneyChangeCount[i]>=moneyCount[i]) {
-								moneyChangeCount[i] = moneyCount[i];
-								coin -= moneyChangeCount[i]*num;
-								if (moneyCount[i] != 0) {
-									message[1] += ", "+num+"원권 부족";
-								}
-								moneyCount[i] = 0;
-							}else {
-								coin = coin % num;
-								moneyCount[i] -=moneyChangeCount[i];
-								if(num == 100) {
-									coin = 0;
-								}
-							}
-						}
-					}
-					for (int i =0; i<=5;i++) totalIncome -= moneyChangeCount[i]*moneyName[i];
-					System.out.printf("거스름돈은 50000원권 %d장, 10000원권 %d장, 5000원권 %d장, 1000원권 %d장, 500원 %d개, 100원 %d개 입니다. %n", moneyChangeCount[0], moneyChangeCount[1], moneyChangeCount[2], moneyChangeCount[3], moneyChangeCount[4], moneyChangeCount[5]);
-//					거스름돈 지급후 리셋
-					for (int i = 0 ; i <= 5; i++) {
-						moneyChangeCount[i] = 0;
-					}
+					
+					returnOfChange(coin, moneyChangeCount, moneyCount, message, totalIncome, moneyName);
+					
 					tmp = 0;
 					//return of change end
 				} else if (tmp == 100 || tmp == 500 || tmp == 1000 || tmp == 5000
@@ -122,33 +94,24 @@ public class Report17_6 {
 							System.out.println();
 							System.out.printf("                                                     현재까지 총 수입은 :  %d원%n", totalIncome);
 							System.out.println();
-							System.out.println("                       <음료별 판매현황>                      ");
-							for (int i = 0; i < vendingMachineSize; i++) {
-								System.out.printf("  %d. %s : %d개     ",i+1,b.dName[i],drinkSoldCount[i]);
-								if(i % 3 == 2) {
-									System.out.println();
+							String[] adminMenu  = new String[] {"음료별 판매현황", "음료별 판매수익", "음료별 남은재고"};
+							for (int i = 0; i < adminMenu.length; i++) {
+								System.out.println("                       <"+adminMenu[i]+">                      ");
+								for (int j = 0; j < vendingMachineSize; j++) {
+									if(i == 0) {
+										System.out.printf("  %d. %s : %d개     ",j+1,b.dName[j],drinkSoldCount[j]);
+									}else if(i == 1) {
+										System.out.printf("  %d. %s : %d원     ",j+1,b.dName[j],drinkSoldCount[j]*b.dPrice[j]);
+									}else if(i == 2) {
+										System.out.printf("  %d. %s : %d개     ",j+1,b.dName[j],b.dAmount[j]);
+									}
+									if(j % 3 == 2) {
+										System.out.println();
+									}
 								}
+								System.out.println();
+								System.out.println();
 							}
-							System.out.println();
-							System.out.println();
-							System.out.println("                       <음료별 판매수익>                    ");
-							for (int i = 0; i < vendingMachineSize; i++) {
-								System.out.printf("  %d. %s : %d원     ",i+1,b.dName[i],drinkSoldCount[i]*b.dPrice[i]);
-								if(i % 3 == 2) {
-									System.out.println();
-								}
-							}
-							System.out.println();
-							System.out.println();
-							System.out.println("                       <음료별 남은 재고>                    ");
-							for (int i = 0; i < vendingMachineSize; i++) {
-								System.out.printf("  %d. %s : %d개     ",i+1,b.dName[i],b.dAmount[i]);
-								if(i % 3 == 2) {
-									System.out.println();
-								}
-							}
-							System.out.println();
-							System.out.println();
 							System.out.println("                       <잔돈 관리>                      ");
 							System.out.printf("  50000원: %d장, 10000원: %d장, 5000원: %d장, 1000원: %d장, 500원: %d개, 100원: %d개%n", moneyCount[0], moneyCount[1], moneyCount[2], moneyCount[3], moneyCount[4], moneyCount[5]);
 							System.out.println();
@@ -159,7 +122,7 @@ public class Report17_6 {
 							System.out.printf("  1. %s      2. %s      3. %s%n", drink, money, drinkName);
 							int choice = scan.nextInt();
 							switch (choice) {
-							case 1:
+							case 1: // 음료 추가
 								System.out.printf("어떤 음료를 추가/수정 하시겠습니까? (관리자 모드 종료:%d, 자판기 전원off:%d)%n", adminOff, sysOff);
 								for (int i = 0; i < vendingMachineSize; i++) {
 									System.out.printf("  %d. %s          ",i+1,b.dName[i]); 
@@ -189,7 +152,7 @@ public class Report17_6 {
 								}
 								break;
 
-							case 2:
+							case 2:	// 잔돈 추가
 								System.out.printf("어떤 잔돈을 추가 수정하시겠습니까? 금액을 입력하세요. (관리자 모드 종료:%d, 자판기 전원off:%d)%n", adminOff, sysOff);
 								System.out.printf("50000, 10000, 5000, 1000, 500, 100%n");
 								System.out.println();
@@ -219,7 +182,7 @@ public class Report17_6 {
 								}
 								System.out.printf("잘못 입력하셨습니다. %n");
 								break;
-							case 3:
+							case 3:	// 음료 수정
 								System.out.printf("어떤 음료를 변경 하시겠습니까? (관리자 모드 종료:%d, 자판기 전원off:%d)%n", adminOff, sysOff);
 								for (int i = 0; i < vendingMachineSize; i++) {
 									System.out.printf("  %d. %s          ",i+1,b.dName[i]); 
@@ -297,37 +260,9 @@ public class Report17_6 {
 //							return of change
 									if (tmp == vendingMachineSize+1) {
 										System.out.printf("잔액(거스름돈) %d원을 반환합니다.%n", coin);
-										int num = 100000;
-										for (int j = 0; j <= 5; j++) {
-											if (j % 2 == 0) {
-												num /= 2;
-											} else {
-												num /= 5;
-											}
-											if (coin / num > 0) {
-												moneyChangeCount[j] = coin / num;
-												if (moneyChangeCount[j]>=moneyCount[j]) {
-													moneyChangeCount[j] = moneyCount[j];
-													coin -= moneyChangeCount[j]*num;
-													if (moneyCount[j] != 0) {
-														message[1] += ", "+num+"원권 부족";
-													}
-													moneyCount[j] = 0;
-												}else {
-													coin = coin % num;
-													moneyCount[j] -=moneyChangeCount[j];
-													if(num == 100) {
-														coin = 0;
-													}
-												}
-											}
-										}
-										for (int k =0; k<=5;k++) totalIncome -= moneyChangeCount[k]*moneyName[k];
-										System.out.printf("거스름돈은 50000원권 %d장, 10000원권 %d장, 5000원권 %d장, 1000원권 %d장, 500원 %d개, 100원 %d개 입니다. %n", moneyChangeCount[0], moneyChangeCount[1], moneyChangeCount[2], moneyChangeCount[3], moneyChangeCount[4], moneyChangeCount[5]);
-//										거스름돈 지급후 리셋
-										for (int j = 0 ; j <= 5; j++) {
-											moneyChangeCount[j] = 0;
-										}
+										
+										returnOfChange(coin, moneyChangeCount, moneyCount, message, totalIncome, moneyName);
+										
 										tmp = 0;
 										beverage = 0;
 										break;
@@ -364,37 +299,8 @@ public class Report17_6 {
 					}
 					if (beverage == vendingMachineSize+1) {
 						System.out.printf("잔액(거스름돈) %d원을 반환합니다.%n", coin);
-						int num = 100000;
-						for (int j = 0; j <= 5; j++) {
-							if (j % 2 == 0) {
-								num /= 2;
-							} else {
-								num /= 5;
-							}
-							if (coin / num > 0) {
-								moneyChangeCount[j] = coin / num;
-								if (moneyChangeCount[j]>=moneyCount[j]) {
-									moneyChangeCount[j] = moneyCount[j];
-									coin -= moneyChangeCount[j]*num;
-									if (moneyCount[j] != 0) {
-										message[1] += ", "+num+"원권 부족";
-									}
-									moneyCount[j] = 0;
-								}else {
-									coin = coin % num;
-									moneyCount[j] -=moneyChangeCount[j];
-									if(num == 100) {
-										coin = 0;
-									}
-								}
-							}
-						}
-						for (int k =0; k<=5;k++) totalIncome -= moneyChangeCount[k]*moneyName[k];
-						System.out.printf("거스름돈은 50000원권 %d장, 10000원권 %d장, 5000원권 %d장, 1000원권 %d장, 500원 %d개, 100원 %d개 입니다. %n", moneyChangeCount[0], moneyChangeCount[1], moneyChangeCount[2], moneyChangeCount[3], moneyChangeCount[4], moneyChangeCount[5]);
-//						거스름돈 지급후 리셋
-						for (int j = 0 ; j <= 5; j++) {
-							moneyChangeCount[j] = 0;
-						}
+						
+						returnOfChange(coin, moneyChangeCount, moneyCount, message, totalIncome, moneyName);
 					}
 					if (beverage < 1 || beverage > vendingMachineSize) {
 						System.out.printf("잘못 입력하셨습니다. 1~%d번 중 하나를 고르세요%n", vendingMachineSize);
@@ -409,38 +315,10 @@ public class Report17_6 {
 				if (sumOfAmount == 0) {
 					System.out.println("모든 재고가 소진되었습니다. 자판기를 이용하실 수 없습니다.");
 					System.out.printf("잔액(거스름돈) %d원을 반환합니다.%n", coin);
-					int num = 100000;
-					for (int i = 0; i <= 5; i++) {
-						if (i % 2 == 0) {
-							num /= 2;
-						} else {
-							num /= 5;
-						}
-						if (coin / num > 0) {
-							moneyChangeCount[i] = coin / num;
-							if (moneyChangeCount[i]>=moneyCount[i]) {
-								moneyChangeCount[i] = moneyCount[i];
-								coin -= moneyChangeCount[i]*num;
-								if (moneyCount[i] != 0) {
-									message[1] += ", "+num+"원권 부족";
-								}
-								moneyCount[i] = 0;
-							}else {
-								coin = coin % num;
-								moneyCount[i] -=moneyChangeCount[i];
-								if(num == 100) {
-									coin = 0;
-								}
-							}
-						}
-					}
-					for (int k =0; k<=5;k++) totalIncome -= moneyChangeCount[k]*moneyName[k];
-					System.out.printf("거스름돈은 50000원권 %d장, 10000원권 %d장, 5000원권 %d장, 1000원권 %d장, 500원 %d개, 100원 %d개 입니다. %n", moneyChangeCount[0], moneyChangeCount[1], moneyChangeCount[2], moneyChangeCount[3], moneyChangeCount[4], moneyChangeCount[5]);
-//					거스름돈 지급후 리셋
-					for (int i = 0 ; i <= 5; i++) {
-						moneyChangeCount[i] = 0;
-					}
-					adminMode = 0;
+					
+					returnOfChange(coin, moneyChangeCount, moneyCount, message, totalIncome, moneyName);
+					
+					adminMode = 0;	// 모든 재고 소진시 이용불가
 				}
 			}
 //			모든 재고 소진시 이용불가
@@ -463,6 +341,39 @@ public class Report17_6 {
 		System.out.println("자판기 종료!!");
 	}
 
+	private static void returnOfChange(int coin, int[] moneyChangeCount, int[] moneyCount, String[] message, int totalIncome, int[] moneyName) {
+		int num = 100000;
+		for (int j = 0; j <= 5; j++) {
+			if (j % 2 == 0) {
+				num /= 2;
+			} else {
+				num /= 5;
+			}
+			if (coin / num > 0) {
+				moneyChangeCount[j] = coin / num;
+				if (moneyChangeCount[j]>=moneyCount[j]) {
+					moneyChangeCount[j] = moneyCount[j];
+					coin -= moneyChangeCount[j]*num;
+					if (moneyCount[j] != 0) {
+						message[1] += ", "+num+"원권 부족";
+					}
+					moneyCount[j] = 0;
+				}else {
+					coin = coin % num;
+					moneyCount[j] -=moneyChangeCount[j];
+					if(num == 100) {
+						coin = 0;
+					}
+				}
+			}
+		}
+		for (int k =0; k<=5;k++) totalIncome -= moneyChangeCount[k]*moneyName[k];
+		System.out.printf("거스름돈은 50000원권 %d장, 10000원권 %d장, 5000원권 %d장, 1000원권 %d장, 500원 %d개, 100원 %d개 입니다. %n", moneyChangeCount[0], moneyChangeCount[1], moneyChangeCount[2], moneyChangeCount[3], moneyChangeCount[4], moneyChangeCount[5]);
+//		거스름돈 지급후 리셋
+		for (int j = 0 ; j <= 5; j++) {
+			moneyChangeCount[j] = 0;
+		}
+	}
 
 	private static void showMenu(int vendingMachineSize, Beverage b, int coin, String[] message) {
 		// 메인 메뉴 화면
@@ -486,7 +397,6 @@ public class Report17_6 {
 		System.out.printf("<안내> " + message[0] + message[1] + "%n");
 		System.out.println();
 		System.out.println("------------------------------------------------------------------------------------");
-		
 	}
 
 	private static boolean possible(int vendingMachineSize, Beverage b, int coin) {
@@ -507,3 +417,27 @@ public class Report17_6 {
 		
 	}
 }
+class Beverage{
+	int vendingMachineSize;
+	
+	String[] dName;
+	int[] dPrice;
+	int[] dAmount;
+	
+	public Beverage() {
+	}
+	
+	public Beverage(int Size){
+		dName = new String[Size];
+		dPrice = new int[Size];
+		dAmount = new int[Size];
+	}
+	
+	void setVendingMachingSize(int Size) {
+		this.vendingMachineSize = Size;
+		dName = new String[this.vendingMachineSize];
+		dPrice = new int[this.vendingMachineSize];
+		dAmount = new int[this.vendingMachineSize];
+	}
+}
+

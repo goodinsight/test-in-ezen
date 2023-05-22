@@ -14,8 +14,8 @@ public class Report10_3 {
 		int[] dAmount = null; // 재고 양
 		dAmount = new int[4];
 		int money = 0; // 돈
-		int choose = 0;
-		int select = 0;
+		int choose = 0; // 메뉴선택
+		int select = 0;// 선택
 
 		dName[0] = "물";
 		dName[1] = "콜라";
@@ -47,15 +47,15 @@ public class Report10_3 {
 //			3. 메뉴 상세 및 수량 및 남은 잔액
 				switch (choose) {
 				case 1:
-					for (int i = 0; i < 3; i++) {
+					for (int i = 0; i < 4; i++) {
 						System.out.println(dName[i] + " 입니다.");
 						System.out.println(dPrice[i] + "원 입니다.");
 						System.out.println("남은 수량" + dAmount[i] + "개 입니다.");
 					}
 					continue;
 				case 2:
-					System.out.println(
-							"1. 물 (" + dPrice[0] + ")" + "2.콜라 (" + dPrice[1] + ")" + "3.커피 (" + dPrice[2] + ")");
+					System.out.println("1. 물 (" + dPrice[0] + ")" + " 2. 콜라 (" + dPrice[1] + ")" + " 3. 커피 ("
+							+ dPrice[2] + ")" + " 4. " + dName[3] + "( " + dPrice[3] + ")");
 					select = scan.nextInt();
 					if (select == 1) {
 						System.out.println(dName[0] + "입니다." + "\n" + dPrice[0] + "원 입니다" + "\n남은 수량은"
@@ -107,10 +107,10 @@ public class Report10_3 {
 					select = scan.nextInt();
 					if (select == 1) {
 						System.out.println("1. 상품 확인");
-						System.out.println(dName[0] + " " + dName[1] + " " + dName[2]);
+						System.out.println(dName[0] + " " + dName[1] + " " + dName[2] + " " + dName[3]);
 					} else if (select == 2) {
 						System.out.println("2. 재고 확인");
-						System.out.println(dAmount[0] + " " + dAmount[1] + " " + dAmount[2]);
+						System.out.println(dAmount[0] + " " + dAmount[1] + " " + dAmount[2] + " " + dAmount[3]);
 					} else if (select == 3) {
 						System.out.println("3. 가격변동");
 						System.out.print("가격 변동 : ");

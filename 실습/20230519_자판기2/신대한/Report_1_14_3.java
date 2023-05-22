@@ -2,7 +2,7 @@ package kr.co.dong.checkPoint;
 
 import java.util.Scanner;
 
-public class Report_1_14_2 {
+public class Report_1_14_3 {
 
 	public static void main(String[] args){
 //		자판기 작동여부
@@ -15,6 +15,14 @@ public class Report_1_14_2 {
 		int money = 0;
 //		음료명
 		String[] dNameStrings = {"제로팹시","밀키스","포카리스웨트","사이다"};
+//		음료명 복사본
+		String[] dNameStringsclone;
+//		음료 가격 복사본
+		int[] dPriceclone;
+//		음료 재고개수 복사본
+		int[] dAmountclone;
+//		음료 팔린개수 복사본
+		int[] dCountclone;
 //		음료 가격
 		int[] dPrice = {2000,1500,1000,500};
 //		음료 재고
@@ -33,6 +41,9 @@ public class Report_1_14_2 {
 //		금일 음료의 판매 개수
 		int[] dCount = {0,0,0,0};
 //		매뉴 추가
+		String newmenu = "";
+//		자판기 금액 추가
+		int chargeplus = 0;
 		while (!power) {
 			System.out.println("매뉴를 선택해주세요");
 			System.out.println("0. 자판기에 돈넣기\t 1.음료결제 \t 2. 잔돈반환  99.종료");
@@ -82,7 +93,7 @@ public class Report_1_14_2 {
 					System.out.println("========================================");
 					System.out.println("관리자모드로 변경합니다.");
 					while (!admin) {
-						System.out.println("1. 재고수정  2. 재품변경  3. 금일매출  4. 가격변경  5. 재고확인   6. 매뉴추가   7. 종료");
+						System.out.println("1. 재고수정  2. 재품변경  3. 금일매출  4. 가격변경  5. 재고확인\n6. 매뉴추가   7. 자판기 금액 조회   8. 자판기 금액 충전   9. 종료");
 						adminchoice = sc.nextInt();
 						switch(adminchoice) {
 							case 1:
@@ -157,9 +168,48 @@ public class Report_1_14_2 {
 								}
 								System.out.println("\n");
 								break;
+							case 6:
+								
+								System.out.println("추가하실 매뉴를 입력해주세요.\n매뉴추가를 취소하고 싶으시면 0번을 눌러주세요.");
+								sc.nextLine();
+								newmenu = sc.nextLine();
+								if(newmenu.equals("0")) {
+									System.out.println("관리자매뉴로 돌아갑니다.");
+									break;
+								}
+								dNameStringsclone = dNameStrings.clone();
+								dPriceclone = dPrice.clone();
+								dAmountclone = dAmount.clone();
+								dCountclone = dCount.clone();
+								dNameStrings = new String[dNameStrings.length+1];
+								dAmount = new int[dAmount.length+1];
+								dCount = new int[dCount.length+1];
+								dPrice = new int[dPrice.length+1];
+								for (int i = 0; i < dNameStringsclone.length; i++) {
+									dNameStrings[i] = dNameStringsclone[i];
+									dAmount[i] = dAmountclone[i];
+									dPrice[i] = dPriceclone[i];
+									dCount[i] = dCountclone[i];
+								}
+								dNameStrings[dNameStringsclone.length] = newmenu;
+								System.out.println("추가하신 매뉴의 가격을 설정해주세요.");
+								dPrice[dPriceclone.length] = sc.nextInt();
+								System.out.println("매뉴가 추가되었습니다 해당매뉴의 재고를 추가해주세요. -->1");
+								break;
+								
 							case 7:
+								System.out.println("현재 자판기 안에 잔액은 "+charge+"원 입니다.");
+								break;
+							case 8:
+								System.out.print("충전하실 금액을 입력해주세요 : ");
+								chargeplus = sc.nextInt();
+								charge += chargeplus;
+								System.out.println("충전이 완료됬습니다 현재 자판기안에 잔액은 "+charge+"원입니다.");
+								break;
+							case 9:
 								admin = !admin;
 								System.out.println("관리자 모드를 종료합니다.");
+								System.out.println("==========================================================");
 								break;
 							default: 
 								System.out.println("해당 매뉴얼은 개발중입니다.");

@@ -12,8 +12,8 @@ public class Report17_6 {
 		Beverage b = new Beverage(vendingMachineSize); //Beverage 객체 생성
 		
 		b.dName = new String[]{"물","사이다","콜라","제로콜라","커피"}; // 음료 이름 초기화 
-		b.dPrice = new int[]{1000, 2000, 2000, 2500, 1500}; // 음료 가격 초기화
-		b.dAmount = new int[]{3, 5, 7, 11, 9};	// 음료 재고 초기화
+		b.dPrice = new int[]{1000, 1500, 2000, 2000, 2500}; // 음료 가격 초기화
+		b.dAmount = new int[]{5, 5, 5, 5, 5};	// 음료 재고 초기화
 		
 		String drink = "음료재고";
 		String money = "잔돈재고";
@@ -507,3 +507,27 @@ public class Report17_6 {
 		
 	}
 }
+class Beverage{
+	int vendingMachineSize;
+	
+	String[] dName;
+	int[] dPrice;
+	int[] dAmount;
+	
+	public Beverage() {
+	}
+	
+	public Beverage(int Size){
+		dName = new String[Size];
+		dPrice = new int[Size];
+		dAmount = new int[Size];
+	}
+	
+	void setVendingMachingSize(int Size) {
+		this.vendingMachineSize = Size;
+		dName = new String[this.vendingMachineSize];
+		dPrice = new int[this.vendingMachineSize];
+		dAmount = new int[this.vendingMachineSize];
+	}
+}
+

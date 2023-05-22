@@ -28,24 +28,23 @@ public class Report21_4 {
 //	item4.dPrice = 5000; // 이건 짝한테 물어보니까 배열로 표현해야한다고 함 복습했다고 치면 좋을듯
 		
 		
-					//	dNum 에서 대략적으로 10개 정도 만들었으니 메뉴도 대충 10개 찍어봄
-	String[] dName = { "Coke", "Sprite", "Coke zero", "Sprite zero","Monster", "Redbull", "Tonic Water","Ginger ale", "Banana Milk","Straw Berry"};
-	String[] dNum = { "①", "②", "③", "④","⑤","⑥","⑦","⑧","⑨","⑩"}; 		// 이건 내가 출력할 때 편의성을 가지려고 선언한 품목임
-	int[] dAmount = { 15, 20, 20, 15, 15, 20, 15, 15, 20, 15}; 		// 재고 갯수
-	int[] dPrice = { 1200, 1200, 1200, 1200, 2000, 2000, 1500, 1500, 1200, 1200,};
+	String[] dName = { "Coke", "Juice", "Energy Drink", "Jin Tonic"};
+	String[] dNum = { "①", "②", "③", "④"}; // 이건 내가 출력할 때 편의성을 가지려고 선언한 품목임
+	int[] dAmount = { 15, 20, 20, 15};
+	int[] dPrice = { 1200, 1500, 2000, 5000};
 	int vCash = 100000; // 시재 개념을 탑재 하는것도 생각해두자
-	int coin = 0; // 투입금액 선언
+	int coin = 0; // 동전은 일단 선언
 	int sel = 0; // 메뉴 선택
 	boolean power = false; // 전원 조건부
 	
-	System.out.println("Hi I'm vending "
-			+ "machine :) ================ | 현재 제공중인");
+	System.out.println("Hi I'm vending machine :) ================ | 현재 제공중인");
 	System.out.println("========================================== | 품목들 입니다");
 	System.out.println(dNum[0]+". "+dName[0] + " : "  + dPrice[0] + " won ============ X " + dAmount[0] + " ===== | 사용을 원하시면");
 	System.out.println(dNum[1]+". "+dName[1] + " : " + dPrice[1] + " won =========== X " + dAmount[1] + " ===== | 동전을 투입");
 	System.out.println(dNum[2]+". "+dName[2] + " : " + dPrice[2] + " won ==== X " + dAmount[2] + " ===== | (입력)해주세요");
 	System.out.println(dNum[3]+". "+dName[3] + " : " + dPrice[3] + " won ======= X " + dAmount[3] + " ===================");		
 	System.out.println("========================================================");
+	System.out.print("입력 = \r");
 	
 	// _4 버전 업데이트 사항 - 선언을 통해서 입력하는 방식에서 배열에다가 값을 넣는 방식으로 변경 됨
 	
@@ -55,38 +54,33 @@ public class Report21_4 {
 	
 	while(!power) {
 		
-		System.out.print("입력 = \r");
 		coin += sc.nextInt();
 		
-		while(true) {
-		
-				if((dAmount[0]+dAmount[1]+dAmount[2]+dAmount[3])==0){
-					System.out.println("======= 투입된 금액 " + coin + "won 이 반환 됩니다. =======");
-					coin-=coin;
-					System.out.println("현재 기기에 투입 되어있는 금액은" + coin +"입니다.");
-					System.out.println("재고 부족으로 기기 전원이 종료됩니다.");
-					power = true;
-				}else if(coin>=10){
-					System.out.println("투입 된 금액은 현재 " + coin + " won 입니다.\r");			
-					System.out.println("해당 기기는 투입한 금액에 해당되는 제품이 표시됩니다.\r");			
+		if((dAmount[0]+dAmount[1]+dAmount[2]+dAmount[3])==0){
+			System.out.println("======= 투입된 금액 " + coin + "won 이 반환 됩니다. =======");
+			coin-=coin;
+			System.out.println("현재 기기에 투입 되어있는 금액은" + coin +"입니다.");
+			System.out.println("재고 부족으로 기기 전원이 종료됩니다.");
+			power = true;
+		}else if(coin>=10){
+			System.out.println("투입 된 금액은 현재 " + coin + " won 입니다.\r");			
+			System.out.println("해당 기기는 투입한 금액에 해당되는 제품이 표시됩니다.\r");			
+			
+				for(int i=0; i<dName.length; i++) {
 					
-					
-					for(int i=0; i<dName.length; i++) {
-					
-						if(coin >= dPrice[i]){
-							System.out.print(dNum[i] + " "+ dName[i]+" ");
-						}
+					if(coin >= dPrice[i]){
+						System.out.print(dNum[i] + " "+ dName[i]+" ");
+						
 					}
-										
-				}else {
-					System.out.println("정상적인 접근이 아닙니다. 투입금액을 확인해 주세요.");	
-					sel=1500;
 					
+					
+				
 		}
 		
-	}
 		
-//		구버전	System.out.println("① "+ dName[0] + " ② " + dName[1] + " ③ " + dName[2] + " ④ "+ dName[3] + " ⑤ 잔돈 반환 ");
+//			System.out.println("① "+ dName[0] + " ② " + dName[1] + " ③ " + dName[2] + " ④ "+ dName[3] + " ⑤ 잔돈 반환 ");
+		
+		}
 		
 		
 		sel = sc.nextInt();
@@ -418,11 +412,11 @@ public class Report21_4 {
 			
 				
 			}
-		
-		}
+			
+	}
 	System.out.println("자판기 종료");
 	
-	}//Main ed
+	}
 
-}//lass ed
+}
 
