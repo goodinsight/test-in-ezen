@@ -10,42 +10,29 @@ public class CheckTest01 {
 		int menu = 0; // 메뉴 진입을 위해 선언
 		Scanner sc = new Scanner(System.in);
 		boolean power = false;
-					
+		
+		
+		
+		
+			
 			while(!power) {
 				
-				System.out.println(" ┌──────────────────────────────────────────┬──────────┐");
-				System.out.println(" │ ┬ ┬┌─┐┌─┐┌─┐┌┬┐┌┐┌┌─┐┬  ┌─┐┌─┐           │  야좀놀자  │");
-				System.out.println(" │ └┬┘├─┤┌─┘│││││││││││││  ┌─┘├─┤     ♬♩    │  숙박예약  │");
-				System.out.println(" │  ┴ ┴ ┴└─┘└─┘┴ ┴┘└┘└─┘┴─┘└─┘┴ ┴           │  sys.v1  │");
-				System.out.println(" ├──────────────────────────────────────────┴──────────┤");
-				System.out.println(" │  1.예약    2.예약취소    3.예약상태확인    99.예약콘솔종료   │");
-				System.out.println(" └─────────────────────────────────────────────────────┘");
-				System.out.println("  ■■■■ 입력 = ");
+				System.out.println(" 숙소예약시스템");
+				System.out.println(" 1.예약 2.예약취소 3.예약상태확인 99.예약시스템 종료");
 				menu = sc.nextInt();
 				
 				switch(menu){ // 큰 메뉴 
 						
 				case 1: // 1.예약하기
-					
-					
-					System.out.println(" 현재 예약이 가능한 호실 목록입니다 몇 번방을 예약하시겠습니까? 객실 규모 : " + room.length +"실");
+					System.out.println(" 현재 예약이 가능한 호실 목록입니다 몇 번방을 예약하시겠습니까?");
 						
 					for(int i =0; i<room.length; i++) { // 예약 여부 확인
-						
 						if(0 == room[i]){
-							System.out.println("┌───────┐\n│ "+(char)(9312+i) + " 가능 │\n└───────┘");
-							
+							System.out.print(" "+(char)(9312+i) + " 예약가능 ");
 						}else{
-							System.out.println("┌───────┐\n│ "+(char)(9312+i) + " 불가 │\n└───────┘");
-						}
-						
-						if(i==6) {
-						
-//					System.out.println();
+							System.out.print(" "+(char)(9312+i) + " 예약불가 ");
 						}
 					}
-//					System.out.println();
-				
 					
 					int rv = 0; // 예약할 방 고르는 변수
 					rv = sc.nextInt(); // 방 번호 선택
@@ -169,15 +156,6 @@ public class CheckTest01 {
 }//class ed
 
 /*
-
-
-20230525 추가사항 객실규모는 시작과 동시에 보여줘야함 (입력) 
-		호텔방 번호랑 호텔방명(스윗/킹/퀸/더블)/객실최대인원/가격
-		예약시 예약자 명 /예약번호 등
-		관리자모드라던가 야놀자 모드
-
-
-
 입력구성에서 	// menu 변수: 1,2,3,99를 입력받음
 
 1을 누른경우는 방의 예약,	 // room[방번호]의 값이 1이면 예약상태
