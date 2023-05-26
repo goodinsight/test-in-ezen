@@ -29,14 +29,15 @@ public class CheckTest13_3 {
 		int[] rSweet = null;				//호텔 방 이름
 		int[] bSweet = null;				//비지니스
 		int[] eSweet = null;				//이코노미
-		int[] price = {80000,60000,45000};	//가격
-		int[] person = {4,3,2};				//객실인원
+		int[] price = {45000,60000,80000};	//가격
+		int[] person = {2,3,4};				//객실인원
 		int choice = 0;						//객실선택
 		String[] prename = null;			//예약자 이름
 		int[] prenum = null;				//예약자 예약번호
 		int count = 0;						//예약횟수
 		int[] preroom = null;				//예약된 호실
 		int pnum = 0;						//투숙인원 입력
+		int pay = 0;						//결제금액
 		String possible = "";
 		System.out.println("로얄 방 개수를 입력하세요 : ");
 		int sel = scan.nextInt();			//선택 
@@ -53,14 +54,19 @@ public class CheckTest13_3 {
 
 		while(!power) {
 			System.out.println("=====호텔 메뉴=====");
-			System.out.println("1.호실예약 2.예약취소 3.호실확인 99.종료");
+			System.out.println("1.호실예약 2.예약취소 3.호실확인 4.결제금액 투입 5.결제금액 반환 99.종료");
+			System.out.println("남은 금액 : "+pay);
 			System.out.println("원하시는 번호를 입력하세요 : ");
 			sel=scan.nextInt();
 			switch (sel) {
 			case 1:
-				System.out.println("3층 - 로얄(최대4명)\n2층 - 비지니스(최대3명)\n1층 - 이코노미(최대2명)");
+				System.out.println("3층 - 로얄(최대4명)80000원\n2층 - 비지니스(최대3명)60000원\n1층 - 이코노미(최대2명)45000원");
 				System.out.println("예약할 층을 입력해주세요 : ");
 				sel = scan.nextInt();
+				if(pay < price[sel-1]) {
+					System.out.println("금액이 부족합니다.");
+					break;
+				}
 				
 				if(sel == 3) {
 					for(int i=0;i<rSweet.length;i++) {
@@ -104,7 +110,7 @@ public class CheckTest13_3 {
 					System.out.println("잘못입력하셨습니다. 다시 입력하세요.");
 				}
 				System.out.println();
-				System.out.println("원하시는 호실을 입력해주세요 : ");
+				System.out.println("원하시는 호실(맨뒤숫자만)을 입력해주세요 : ");
 				choice = scan.nextInt();
 				System.out.println("투숙인원을 입력해주세요 : ");
 				pnum = scan.nextInt();
@@ -122,6 +128,7 @@ public class CheckTest13_3 {
 						System.out.println("원하시는 예약번호 6자리를 입력하세요 :");
 						prenum[count] = scan.nextInt();
 						System.out.println("예약이 완료되었습니다.");
+						pay -=price[sel-1];
 						rSweet[choice-1] = 1;
 						preroom[count] = sel*100 +choice;
 						count++;
@@ -136,6 +143,7 @@ public class CheckTest13_3 {
 						System.out.println("원하시는 예약번호 6자리를 입력하세요 :");
 						prenum[count] = scan.nextInt();
 						System.out.println("예약이 완료되었습니다.");
+						pay -=price[sel-1];
 						bSweet[choice-1] = 1;
 						preroom[count] = sel*100 +choice;
 						count++;
@@ -147,9 +155,10 @@ public class CheckTest13_3 {
 						System.out.println("예약하시는 분의 성함을 입력해주세요 :");
 						scan.nextLine();
 						prename[count] = scan.nextLine();
-						System.out.println("원하시는 예약번호 6자리를 입력하세요 :");
+						System.out.println("원하시는 예약번호를 입력하세요 :");
 						prenum[count] = scan.nextInt();
 						System.out.println("예약이 완료되었습니다.");
+						pay -=price[sel-1];
 						eSweet[choice-1] = 1;
 						preroom[count] = sel*100 +choice;
 						count++;
@@ -168,15 +177,10 @@ public class CheckTest13_3 {
 					}
 				}
 				if(equ == true) {
-					System.out.println("예약하신분의 성함을 입력해주세요 : ");
+					System.out.println("예약하신분의 성함과 예약번호를 입력해주세요 : ");
 					scan.nextLine();
-					System.out.println("예약번호를 입력해주세요 : ");
 					if(prename[tmp].equals(scan.nextLine()) && prenum[tmp] == scan.nextInt()) {
 						System.out.println("예약이 취소되었습니다.");
-						System.out.println(preroom[tmp]);
-						System.out.println(preroom[tmp]/100);
-						System.out.println(preroom[tmp]%10);
-						
 						if(preroom[tmp] / 100 == 1) {
 							eSweet[preroom[tmp]%10-1] = 0;
 						}else if(preroom[tmp] / 100 == 2) {
@@ -228,6 +232,18 @@ public class CheckTest13_3 {
 					System.out.print("10"+(i+1)+"호"+possible+"   ");
 				}
 				System.out.println();
+				break;
+			case 4:
+				System.out.println("원하시는 금액을 입력하세요 : ");
+				pay += scan.nextInt();
+				break;
+			case 5:
+				System.out.println("결제금액을 반환합니다.");
+				System.out.println(pay);
+				pay = 0;
+				break;
+			case 77:
+				System.out.println("===관리자 모드===");
 				break;
 			case 99:
 				System.out.println("프로그램 종료");

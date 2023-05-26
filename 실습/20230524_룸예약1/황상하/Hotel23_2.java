@@ -36,6 +36,11 @@ public class Hotel23_2 {
 		boolean power = false;
 
 		while (!power) {
+			if(roomSize == 0) {
+				System.out.println("☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★");
+				System.out.println("관리자모드에서 초기설정이 필요합니다.");
+				System.out.println("☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★");
+			}
 			System.out.println("=======================");
 			System.out.println("     호텔예약/관리시스템");
 			System.out.println("=======================");
