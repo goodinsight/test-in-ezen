@@ -37,8 +37,8 @@ public class Room {
 	public boolean isRcheck() {
 		return rcheck;
 	}
-	public void setrcheck(boolean rcheck) {
-		this.rcheck = rcheck;
+	public boolean setrcheck(boolean rcheck) {
+		return this.rcheck = rcheck;
 	}
 	public String getCustomer() {
 		return customer;

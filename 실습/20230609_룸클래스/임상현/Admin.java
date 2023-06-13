@@ -1,5 +1,8 @@
 package kr.co.dong.room;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
@@ -65,25 +68,14 @@ public class Admin {
 		}
 	}
 	
+	
 	public void RoomAdd(List<Room> list){
-		System.out.println("호수, 방 이름, 가격, 방 설명(생략가능)을 차례대로 입력해주세요.");
-		System.out.print("호수 : ");
-		int rNo = scan.nextInt();
-		System.out.print("방 이름 : ");
-		String rName = scan.next();
-		System.out.print("가격 : ");
-		int rPrice = scan.nextInt();
-		System.out.println("방 설명 : ");
-		String rContent = scan.next();
-		
-		if(rContent == null) {
-			list.add(new Room(rNo, rName, rPrice));
-		} else{
-			list.add(new Room(rNo, rName, rPrice, rContent));
-		}
+		System.out.println("호수, 방 이름, 가격, 방 설명 순으로 입력하세요 ((\", \")으로 구분)");
+		scan.nextLine();
+		String input = scan.nextLine();
 		try {
-			fw = new FileWriter("log.txt", true);
-			fw.write("(방 생성됨) 호수 : " + rNo + "방 이름 : " + rName + "가격 : " + rPrice + "방 설명 : " + rContent + "\n");
+			fw = new FileWriter("roomList.txt", true);
+			fw.write("\n" + input);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -95,8 +87,40 @@ public class Admin {
 				e.printStackTrace();
 			}
 		}
+		listCheck(list);
+//		System.out.println("호수, 방 이름, 가격, 방 설명(생략가능)을 차례대로 입력해주세요.");
+//		System.out.print("호수 : ");
+//		int rNo = scan.nextInt();
+//		System.out.print("방 이름 : ");
+//		String rName = scan.next();
+//		System.out.print("가격 : ");
+//		int rPrice = scan.nextInt();
+//		System.out.print("방 설명 : ");
+//		String rContent = scan.next();
+//		
+//		if(rContent == null) {
+//			list.add(new Room(rNo, rName, rPrice));
+//		} else{
+//			list.add(new Room(rNo, rName, rPrice, rContent));
+//		}
+//		sort(list);
+//		try {
+//			fw = new FileWriter("log.txt", true);
+//			fw.write("(방 생성됨) 호수 : " + rNo + " 방 이름 : " + rName + " 가격 : " + rPrice + "방 설명 : " + rContent + "\n");
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} finally {
+//			try {
+//				fw.close();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
 	}
 	
+
 	public void RoomSet(List<Room> list) {
 		showRoom(list);
 		System.out.print("수정할 방의 호수 : ");
@@ -121,9 +145,10 @@ public class Admin {
 				} else{
 					list.set(list.indexOf(data), new Room(rNo, rName, rPrice, rContent));
 				}
+				sort(list);
 				try {
 					fw = new FileWriter("log.txt", true);
-					fw.write("(방 수정됨) 호수 : " + rNo + "방 이름 : " + rName + "가격 : " + rPrice + "방 설명 : " + rContent + "\n");
+					fw.write("(방 수정됨) 호수 : " + rNo + " 방 이름 : " + rName + " 가격 : " + rPrice + " 방 설명 : " + rContent + "\n");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -135,9 +160,9 @@ public class Admin {
 						e.printStackTrace();
 					}
 				}
+				listCheck(list);
 				break;
 			}
-			
 		}
 	}
 	
@@ -154,7 +179,7 @@ public class Admin {
 				}
 				try {
 					fw = new FileWriter("log.txt", true);
-					fw.write("(방 확인됨) 호수 : " + data.getrNo() + "방 이름 : " + data.getrName() + "가격 : " + data.getrPrice() + "방 설명 : " + data.getrContent() + "\n");
+					fw.write("(방 확인됨) 호수 : " + data.getrNo() + " 방 이름 : " + data.getrName() + " 가격 : " + data.getrPrice() + " 방 설명 : " + data.getrContent() + "\n");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -166,6 +191,7 @@ public class Admin {
 						e.printStackTrace();
 					}
 				}
+				listCheck(list);
 				break;
 			}
 		}
@@ -176,9 +202,14 @@ public class Admin {
 		System.out.print("제거할 방의 호수 입력 : ");
 		choice = scan.nextInt();
 		for(Room data : list) {
+			if(data.getrNo() == choice) {
+				System.out.println(data.getrNo() + "호가 삭제되었습니다. \n");
+				list.remove(list.indexOf(data));
+			}
+			sort(list);
 			try {
 				fw = new FileWriter("log.txt", true);
-				fw.write("(방 제거됨) 호수 : " + data.getrNo() + "방 이름 : " + data.getrName() + "가격 : " + data.getrPrice() + "방 설명 : " + data.getrContent() + "\n");
+				fw.write("(방 제거됨) 호수 : " + data.getrNo() + " 방 이름 : " + data.getrName() + " 가격 : " + data.getrPrice() + " 방 설명 : " + data.getrContent() + "\n");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -190,10 +221,7 @@ public class Admin {
 					e.printStackTrace();
 				}
 			}
-			if(data.getrNo() == choice) {
-				System.out.println(data.getrNo() + "호가 삭제되었습니다. \n");
-				list.remove(list.indexOf(data));
-			}
+			listCheck(list);
 		}
 	}
 	
@@ -208,6 +236,40 @@ public class Admin {
 			System.out.println("호수 : " + data.getrNo() + " 방 이름 : " + data.getrName() + " 가격 : " + data.getrPrice() + " 예약상태 : " + state);
 		
 		}
+	}
+	
+	public void sort(List<Room> roomList) {
+		for(int i = 0; i < roomList.size()-1; i++) {
+			if(roomList.get(i).getrNo() > roomList.get(i+1).getrNo()) {
+				Room data = roomList.get(i+1);
+				roomList.set(i+1, roomList.get(i));
+				roomList.set(i, data);
+				i = -1;
+			}
+		}
+	}
+	
+	public void listCheck(List<Room> list) {
+		list.clear();
+		try {
+			BufferedReader br = new BufferedReader(new FileReader("roomList.txt"));
+			while(true) {
+				String str = br.readLine();
+				if(str == null) {
+					break;
+				}
+				String[] strArr = str.split(", ");
+				list.add(new Room(Integer.parseInt(strArr[0]), strArr[1], Integer.parseInt(strArr[2]), strArr[3]));
+			}
+			br.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		sort(list);
 	}
 	
 }

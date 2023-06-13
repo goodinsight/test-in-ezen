@@ -14,8 +14,7 @@ public class RoomControl {
 		Admin ad = new Admin();
 		List<Room> list = new ArrayList<Room>();
 		boolean stop = false;
-		
-		init(list);
+		ad.listCheck(list);
 		
 		while(!stop) {
 			int sel = rf.menu();
@@ -58,7 +57,7 @@ public class RoomControl {
 					break;
 					
 				case 3:
-					ad.RoomDel(list);
+					ad.RoomSet(list);
 					break;
 					
 				case 4:
@@ -72,8 +71,8 @@ public class RoomControl {
 				default:
 					System.out.println("잘못된 입력입니다.");
 					break;
-					
 				}
+				break;
 				
 			default:
 				System.out.println("잘못된 입력입니다.");
@@ -81,22 +80,5 @@ public class RoomControl {
 				
 			}
 		}
-		
-
-	}
-	
-	private static void init(List<Room> roomList) {
-		Room r1 = new Room(101, "소나무", 20000, "사는 방");
-		Room r2 = new Room(102, "참나무", 20000, "사는 방");
-		Room r3 = new Room(103, "동백나무", 20000, "사는 방");
-		Room r4 = new Room(104, "벚나무", 20000, "사는 방");
-		Room r5 = new Room(105, "은행나무", 20000, "사는 방");
-		
-		roomList.add(r1);
-		roomList.add(r2);
-		roomList.add(r3);
-		roomList.add(r4);
-		roomList.add(r5);
-	}
-
+	}	
 }

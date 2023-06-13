@@ -9,6 +9,7 @@ public class RoomFunc {
 	FileWriter fw = null;
 	Scanner scan = new Scanner(System.in);
 	int choice = 0;
+	String input = null;
 	public int menu(){
 		System.out.println("(1)예약하기, (2)예약취소, (3)방정보, (4)예약정보, (0)종료");
 		System.out.print("선택 : ");
@@ -17,10 +18,18 @@ public class RoomFunc {
 	// 예약
 	public void Res(List<Room> list) {
 		showRoom(list);
-		System.out.print("예약할 호실 선택 : ");
-		choice = scan.nextInt();
-		for(Room data : list) {
-			if(data.getrNo() == choice) {
+		System.out.print("예약할 호실(방 이름) 선택 : ");
+		input = scan.next();
+		boolean check = false;
+		Room data = null;
+		for(Room index : list) {
+			if(String.valueOf(index.getrNo()).equals(input) || index.getrName().equals(input)) {
+				check = true;
+				data = index;
+				break;
+			}
+		}
+			if(check) {
 				if(data.isrState() != false) {
 					System.out.println("이미 예약되어있는 방입니다.");
 				}else {
@@ -45,18 +54,18 @@ public class RoomFunc {
 					}
 					System.out.println(data.getrNo() + "호실 " + data.getrName() + "방이 " + data.getCustomer() + "님 이름으로 예약되었습니다. \n");
 				}
-				break;
+			} else {
+				System.out.println("잘못된 입력입니다.");
 			}
-		}
-		
 	}
+	
 	// 예약 취소
 	public void ResCancel(List<Room> list) {
 		showRoom(list);
 		System.out.print("예약을 취소할 호실 선택 : ");
 		choice = scan.nextInt();
-		for(Room data : list) {
-			if(data.getrNo() == choice) {
+		Room data = findrNo(choice, list);
+			if(data != null) {
 				if(data.isrState() == false) {
 					System.out.println("예약되어있지 않은 방입니다.");
 				}else {
@@ -87,10 +96,9 @@ public class RoomFunc {
 
 					}
 				}
-				break;
 			}
-		}
 	}
+	
 	// 3번 선택 시 전체 방, 선택 방 구분
 	public void Check(List<Room> list) {
 		System.out.print("(1)모든 방 확인, (2)방 선택확인 : ");
@@ -103,6 +111,7 @@ public class RoomFunc {
 			System.out.println("잘못된 입력입니다.");
 		}
 	}
+	
 	// 전체 방 정보
 	public void AllRoomCheck(List<Room> list) {
 		showRoom(list);
@@ -121,13 +130,14 @@ public class RoomFunc {
 			}
 		}
 	}
+	
 	// 선택 방 정보
 	public void RoomCheck(List<Room> list) {
 		showRoom(list);
 		System.out.print("확인할 호실 : ");
 		choice = scan.nextInt();
-		for(Room data : list) {
-			if(data.getrNo() == choice) {
+		Room data = findrNo(choice, list);
+		if(data != null) {
 				String state = null;
 				if(data.isrState() == true) {
 					state = "예약됨";
@@ -148,19 +158,17 @@ public class RoomFunc {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				}
-				break;
+				}	
 			}
-		}
-		
 	}
+	
 	// 예약 확인
 	public void ResCheck(List<Room> list) {
 		showRoom(list);
 		System.out.print("예약을 확인할 호실 : ");
 		choice = scan.nextInt();
-		for(Room data : list) {
-			if(data.getrNo() == choice) {
+		Room data = findrNo(choice, list);
+			if(data != null) {
 				if(data.isrState() != true) {
 					System.out.println("예약이 없습니다.");
 				}else {
@@ -180,12 +188,9 @@ public class RoomFunc {
 						e.printStackTrace();
 					}
 				}
-				break;
 			}
-		}
-		
-		
 	}
+	
 	public void showRoom(List<Room> list) {
 		if(list == null) {
 			System.out.println("방이 없습니다. 관리자에게 문의하세요.");
@@ -201,4 +206,43 @@ public class RoomFunc {
 			}
 		}
 	}
+	
+	// 방번호로 찾기
+	Room findRoom(String name, List<Room> list) {
+		int index = -1;
+		
+		for(int i = 0; i < list.size(); i++) {
+			list.get(i).getrName(); // 리스트 내의 방 이름
+			if(name.equals(list.get(i).getrName())) {
+				index = i;
+				break;
+			}
+		}
+		return list.get(index);
+	}
+	
+	
+	Room findrNo(int rNo, List<Room> list) {
+		Room index = null;
+		for(Room data : list) {
+			if(data.getrNo() == rNo) {
+				index = data;
+				break;
+			}
+		}
+		return index;
+	}	
+	
+	public void sort(List<Room> roomList) {
+		for(int i = 0; i < roomList.size()-1; i++) {
+			if(roomList.get(i).getrNo() > roomList.get(i+1).getrNo()) {
+				Room data = roomList.get(i+1);
+				roomList.set(i+1, roomList.get(i));
+				roomList.set(i, data);
+				i = -1;
+			}
+		}
+	
+	}
+	
 }

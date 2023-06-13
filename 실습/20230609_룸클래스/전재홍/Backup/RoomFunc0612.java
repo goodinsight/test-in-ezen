@@ -10,6 +10,7 @@ public class RoomFunc {
 	
 		List<Room> list = new ArrayList<Room>();
 		
+		
 //		예약하기 기능
 		
 		public void roomRev(List<Room> list) {
@@ -36,11 +37,11 @@ public class RoomFunc {
 					num.setCustoemr(sc.next());
 					System.out.println("연락처 뒷자리를 입력해주세요[예약확인코드]");
 					num.setResCode(sc.next());
-										
-					System.out.println("예약 되었습니다. 예약확인코드를 꼭 기억해주세요.");
 				}
 			}
 		}	
+			
+		
 
 //		예약취소 기능
 		public void  roomCan(List<Room> list) {
@@ -65,19 +66,20 @@ public class RoomFunc {
 					System.out.println("연락처 뒷자리를 입력해주세요[예약확인코드]");
 					
 					roomcan = sc.next();// 취소할 예약확인코드 입력
-						if(num.getResCode().equals(roomcan)) {
-							
+						if(!(num.getResCode().equals(roomsel))) {
+							System.out.println("예약확인코드가 올바르지 않습니다.");							
+						}else{
 							num.setrState(false);
 							num.setCustoemr(null);
 							num.setResCode(null);
-							
-							System.out.println("예약이 취소 되었습니다.");
-						}else{	
-							System.out.println("예약확인코드가 올바르지 않습니다.");							
 						}
+					
 				}
 			}
+			
+			
 		}
+
 
 //		방 정보 확인
 		public void  roomChck(List<Room> list) {
@@ -89,21 +91,24 @@ public class RoomFunc {
 					System.out.println(" ■예약■ 객실이름 :"+num.getrName()+"방 번호:"+ num.getrNo()+"가격:"+ num.getrPrice());
 				}else {
 					System.out.println(" ■공실■ 객실이름 :"+num.getrName()+"방 번호:"+ num.getrNo()+"가격:"+ num.getrPrice());
+					
 				}
 			}
+
 		}
-//			화장실 다녀와서 4번 기능 고치기 : 예약번호로 예약한 객실 정보 불러오기.
-		
-		public void  nameChk(List<Room> list) {
+			
+		public void  nameChck(List<Room> list) {
 			System.out.println(" 예약하신 객실의 정보를 불러옵니다. 예약시 입력한 코드[연락처뒷자리]를 입력해주세요.");
-			String nameChk = sc.next();
 			
 			for(Room num : list) {
-				if(num.getResCode().equals(nameChk)) {
+				String nameChk = sc.next();
+				if(!(num.getResCode().equals(nameChk))) {
+					System.out.println("입력한 코드가 올바르지 않습니다.");
+				}else {
 					System.out.println("예약자 "+num.getCustoemr()+ " 님의 예약정보입니다 \r"
 							+ num.getrName() + " 객실 : " + num.getrNo()+ " 호 입니다.");
-					break;
 				}
+				
 			}
 			
 		}
@@ -116,16 +121,13 @@ public class RoomFunc {
 			System.out.println(" │ └┬┘├─┤┌─┘│││││││││││││  ┌─┘├─┤     ♬♩    │  숙박예약  │");
 			System.out.println(" │  ┴ ┴ ┴└─┘└─┘┴ ┴┘└┘└─┘┴─┘└─┘┴ ┴           │  sys.V2  │");
 			System.out.println(" ├──────────────────────────────────────────┴──────────┤");
-			System.out.println(" │   1.예약     2.예약취소     3.방정보확인    4.예약자확인    │");
-			System.out.println(" │                          77.관리자모드   0.종료합니다    │");
+			System.out.println(" │   1.예약     2.예약취소     3.방정보확인    0.종료합니다    │");
 			System.out.println(" └─────────────────────────────────────────────────────┘");
 			System.out.println(" ■■■■ 입력 = ");
 			
 			return sc.nextInt();
+			
 		}
-		
-		
-//		public 
 		
 //		흐름 보여주기  ㅠㅠ 아직못함
 		

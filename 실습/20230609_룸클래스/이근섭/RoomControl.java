@@ -1,5 +1,10 @@
 package kr.co.dong.room;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,7 +19,7 @@ public class RoomControl {
 		
 		
 //		호텔의 룸 정보를 초기화하고 저장
-		init(list);
+		list = init();
 		
 		while(!stop) {
 			int sel = menu();
@@ -39,28 +44,75 @@ public class RoomControl {
 			}
 		}
 	}
-
+//	list 내에 해당 내용이 저장되어 있는 index를 찾는 메소드
+//	방번호로 찾기? 방이름으로 찾기?
+	private static int findRoom(String name, List<Room> list) {
+		int index = -1;
+		for(Room r : list) {
+//			list.get(i).getrName() => 리스트내에 방이름
+			if(r.getrName().equals(name)) {
+				
+//				index = r;
+				break;
+			}	
+		}
+		return index;
+	}
+	
+	private static int findRoom(int rNumber, List<Room> list) {
+		int index = -1;
+		for(int i = 0; i < list.size(); i++) {
+//			list.get(i).getrName() => 리스트내에 방이름
+			if(list.get(i).getrNumber() == rNumber) {
+				index = i;
+				break;
+			}	
+		}
+		return index;
+	}
+	private static int searchRoom(int rPrice, List<Room> list) {
+		int index = -1;
+		for(int i = 0; i < list.size(); i++) {
+//			list.get(i).getrName() => 리스트내에 방이름
+			if(list.get(i).getrPrice() == rPrice) {
+				index = i;
+				break;
+			}	
+		}
+		return index;
+	}
+	private static int searchRoom(String rName, List<Room> list) {
+		int index = -1;
+		for(int i = 0; i < list.size(); i++) {
+//			list.get(i).getrName() => 리스트내에 방이름
+			if(list.get(i).getrName().equals(rName)) {
+				index = i;
+				break;
+			}	
+		}
+		return index;
+	}
+	
 	private static void inforCustomer(List<Room> list) {
 		try {
 			int sel = inpuM("예약자 정보를 원하시는 방 호실을 입력하세요 : ");
-			System.out.println(sel+"호실의 예약자명 : " + list.get(sel-101).getCustomer() + ", 예약코드 : " + list.get(sel-101).getRevCode() + " 입니다.");
+			System.out.println(sel+"호실의 예약자명 : " + list.get(findRoom(sel,list)).getCustomer() + ", 예약코드 : " + list.get(findRoom(sel,list)).getRevCode() + " 입니다.");
 		}catch(Exception e){
 			System.out.println("방 호실을 제대로 입력하세요");
 			scan.nextLine();
 		}
-		
 	}
 
 	private static void cancelRoom(List<Room> list) {
 		try {
 			int sel = inpuM("예약취소 하고자 하는 방 호실을 입력하세요 : ");
-			if(list.get(sel-101).isCheck() == true) {
+			if(list.get(findRoom(sel,list)).isCheck() == true) {
 				System.out.println(sel+"호실은 예약취소가 가능합니다.");
 				System.out.println("예약자 이름을 입력하세요 : ");
-				if(list.get(sel-101).getCustomer().equals(scan.next())) {
+				if(list.get(findRoom(sel,list)).getCustomer().equals(scan.next())) {
 					System.out.println("예약 코드를 입력하세요 : ");
-					if(list.get(sel-101).getRevCode().equals(scan.next())) {
-						list.get(sel-101).setCheck(false);
+					if(list.get(findRoom(sel,list)).getRevCode().equals(scan.next())) {
+						list.get(findRoom(sel,list)).setCheck(false);
 						System.out.println(sel+"호실은 예약이 취소되었습니다.");
 					}else {
 						System.out.println("예약코드가 틀립니다.");
@@ -83,14 +135,14 @@ public class RoomControl {
 	private static void revRoom(List<Room> list) {
 		try {
 			int sel = inpuM("예약하고자 하는 방 호실을 입력하세요 : ");
-			if(list.get(sel-101).isCheck() == false) {
+			if(list.get(findRoom(sel,list)).isCheck() == false) {
 				System.out.println(sel+"호실은 예약이 가능합니다.");
 				System.out.println("예약자 이름을 입력하세요 : ");
-				list.get(sel-101).setCustomer(scan.next());
+				list.get(findRoom(sel,list)).setCustomer(scan.next());
 				System.out.println("예약 코드를 입력하세요(예약취소시 필요) : ");
-				list.get(sel-101).setRevCode(scan.next());
-				list.get(sel-101).setCheck(true);
-				System.out.println(sel+"호실은 예약자 : "+list.get(sel-101).getCustomer()+", 예약 코드 : "+list.get(sel-101).getRevCode()+" 로  예약 되었습니다.");
+				list.get(findRoom(sel,list)).setRevCode(scan.next());
+				list.get(findRoom(sel,list)).setCheck(true);
+				System.out.println(sel+"호실은 예약자 : "+list.get(findRoom(sel,list)).getCustomer()+", 예약 코드 : "+list.get(findRoom(sel,list)).getRevCode()+" 로  예약 되었습니다.");
 			}else {
 				System.out.println("예약이 불가합니다.");
 			}
@@ -149,12 +201,30 @@ public class RoomControl {
 		}
 	}
 
-	private static void init(List<Room> list) {
+	private static List init() {
 		// TODO Auto-generated method stub
-		list.add(new Room(101, "소나무 ", 20000, "사는 방"));
-		list.add(new Room(102, "참나무 ", 20000, "사는 방"));
-		list.add(new Room(103, "동백나무", 20000, "사는 방"));
-		list.add(new Room(104, "벚나무 ", 20000, "사는 방"));
-		list.add(new Room(105, "은행나무", 20000, "사는 방"));
+		List<Room> list = new ArrayList<>();
+		String fileName = "roomInfor.txt";
+		BufferedReader br;
+		Room r;
+		try {
+			br = new BufferedReader(new FileReader(fileName));
+			while(true) {
+				String data = br.readLine();
+				if(data==null)
+					break;
+				String[] tmp = data.split(", ");
+				r = new Room(Integer.parseInt(tmp[0]),tmp[1],Integer.parseInt(tmp[2]),tmp[3]);
+				list.add(r);
+			}		
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			
+		return list;
 	}
 }

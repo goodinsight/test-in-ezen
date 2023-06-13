@@ -35,11 +35,8 @@ public class RoomControl {
 				rf.roomChck(list);
 				break;
 			case 4: // 예약자 정보 확인
-				rf.nameChk(list);
+				rf.nameChck(list);
 				break;
-			case 5: //
-				
-				
 
 			default:
 				break;
@@ -57,7 +54,6 @@ public class RoomControl {
 		Room r3 = new Room(103, "동백나무", 20000, "3가 사는 방");
 		Room r4 = new Room(104, "벛나무", 20000, "4가 사는 방");
 		Room r5 = new Room(105, "은행나무", 20000, "5가 사는 방");
-		Room r6 = new Room(106, "전나무", 20000, "6이 사는 방");
 		
 //		방 저장
 		list.add(r1);
@@ -65,7 +61,6 @@ public class RoomControl {
 		list.add(r3);
 		list.add(r4);
 		list.add(r5);
-		list.add(r6);
 
 	}
 

@@ -61,6 +61,7 @@ public class Room {
 	}
 
 	public void setrdescription(String rdescription) {
+		this.rdescription = rdescription;
 	}
 
 	public boolean isCheck() {

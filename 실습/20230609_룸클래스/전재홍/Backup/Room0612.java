@@ -6,15 +6,15 @@
 package kr.co.dong.room;
 
 public class Room {
-	private int rNo;
-	private String rName;
-	private int rPrice;
-	private String rContent = "입력되어있지 않습니다.";
-	private boolean rState = false;
-	private String Customer;
-	private String resCode;
+	private int rNo;	// 방 호수
+	private String rName; // 방 이름
+	private int rPrice; // 방 가격
+	private String rContent = "입력되어있지 않습니다."; // 방 설명 
+	private boolean rState = false; // 예약상태
+	private String customer; // 예약자 명
+	private String resCode; // 예약 코드
 	
-	public Room(int rNo, String rName, int rPrice) {
+	public Room(int rNo, String rName, int rPrice) { 
 		super();
 		this.rNo = rNo;
 		this.rName = rName;
@@ -69,12 +69,12 @@ public class Room {
 		this.rState = rState;
 	}
 
-	public String getCustomer() {
-		return Customer;
+	public String getCustoemr() {
+		return customer;
 	}
 
-	public void setCustomer(String Customer) {
-		this.Customer = Customer;
+	public void setCustoemr(String customer) {
+		this.customer = customer;
 	}
 
 	public String getResCode() {
@@ -84,4 +84,7 @@ public class Room {
 	public void setResCode(String resCode) {
 		this.resCode = resCode;
 	}
+	
+	
+	
 }
