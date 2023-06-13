@@ -21,5 +21,6 @@ public class Test03 {
 		}else {
 			System.out.println("¥Á√∑¿Ã æ∆¥’¥œ¥Ÿ.");
 		}
+		scan.close();
 	}
 }

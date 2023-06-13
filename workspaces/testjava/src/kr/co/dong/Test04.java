@@ -21,7 +21,7 @@ public class Test04 {
 		printStr(str3);
 		System.out.println();
 		hanoiTower(str1, str2, str3, ringNum);
-
+		scan.close();
 	}
 
 	public static void printStr(int[] a) {

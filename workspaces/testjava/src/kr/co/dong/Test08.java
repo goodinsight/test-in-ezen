@@ -3,12 +3,13 @@ package kr.co.dong;
 public class Test08 {
 	public static void main(String[] args) {
 		int a = 2, b =5, c=2, d=6;
+		
 		int answer = 1000*a + 100*b + 10*c + d;
 		String tmp = Integer.toString(answer);
-        int length_a = tmp.replace(tmp.valueOf(a),"").length();
-        int length_b = tmp.replace(tmp.valueOf(b),"").length();
-        int length_c = tmp.replace(tmp.valueOf(c),"").length();
-        int length_d = tmp.replace(tmp.valueOf(d),"").length();
+        int length_a = tmp.replace(String.valueOf(a),"").length();
+        int length_b = tmp.replace(String.valueOf(b),"").length();
+        int length_c = tmp.replace(String.valueOf(c),"").length();
+        int length_d = tmp.replace(String.valueOf(d),"").length();
         
         int sumOfLength = length_a + length_b + length_c + length_d;
         

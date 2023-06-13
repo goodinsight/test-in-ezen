@@ -50,7 +50,8 @@ public class Test07 {
 		printStr(str1);
 		printStr(str2);
 		printStr(str3);
-
+		
+		scan.close();
 	}
 
 	public static void printStr(int[] a) {
