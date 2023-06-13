@@ -96,8 +96,8 @@ public class Room {
 		}else {
 			mark = "예약 불가능";
 		}
-		return "Room [방 호수 =" + rNo + ", 방 이름 =" + rName + ", 방 가격 =" + rprice + ", 방 설명 =" + rdescription
-				+ ", 예약여부 =" + mark +"]";
+		return "Room [방 호수 = " + rNo + ", 방 이름 = " + rName + ", 방 가격 = " + rprice + ", 방 설명 = " + rdescription
+				+ ", 예약여부 = " + mark +"]";
 	}
 
 }
