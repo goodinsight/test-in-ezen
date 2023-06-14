@@ -1,14 +1,9 @@
 package kr.co.dong.room;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
-import java.util.StringTokenizer;
 
 public class RoomControl {
 
@@ -20,7 +15,9 @@ public class RoomControl {
 		List<Room> roomList = new ArrayList<Room>();
 		boolean stop = false;
 		List<Reservation> roomRes = new ArrayList<Reservation>();
+		
 		init(roomList);
+		
 		while (!stop) {
 			int sel = menu();
 			
@@ -86,7 +83,7 @@ public class RoomControl {
 				System.out.println("선택하신 호실은 이미 예약이 되어있습니다.");
 			}else {
 				
-				reservation(num, stringChoice("예약자분의 성함을 입력해주세요"),ramNum() , roomRes);
+				room(num, stringChoice("예약자분의 성함을 입력해주세요"),ramNum() , roomRes);
 				roomList.get(index).setRoomCheck(true);
 				System.out.println("선택하신 호실이 예약되셨습니다.");
 			}
@@ -112,7 +109,12 @@ public class RoomControl {
 			}
 		}else if(sel == 2) {
 			int num = choice("호실을 선택해주세요.");
-			int index = roomIndex(roomList, num);
+			int index = -1;
+			for (int i = 0; i < roomList.size(); i++) {
+				if(num == roomList.get(i).getRoomNum()) {
+					index = i;
+				}
+			}
 			if(index != -1) {
 				System.out.println(roomList.get(index));
 			}else {
@@ -125,61 +127,18 @@ public class RoomControl {
 	}
 
 //	방의 리스트를 초기화 해주는 메소드
-	
-	
-	
-//	private static void init(List<Room> roomList) {
-//		
-//		
-//		
-//		Room r1 = new Room(101, "소나무", 20000, "사는 방");
-//		Room r2 = new Room(102, "참나무", 20000, "사는 방");
-//		Room r3 = new Room(103, "동백나무", 20000, "사는 방");
-//		Room r4 = new Room(104, "벚나무", 20000, "사는 방");
-//		Room r5 = new Room(105, "은행나무", 20000, "사는 방");
-//		
-//		roomList.add(r1);
-//		roomList.add(r2);
-//		roomList.add(r3);
-//		roomList.add(r4);
-//		roomList.add(r5);
-//	}
-	
 	private static void init(List<Room> roomList) {
-		String str = "";
-		Room r1 = null;
-		BufferedReader read = null;
-		try {
-			read = new BufferedReader(new FileReader("room.txt"));
-			while (true) {
-				str = read.readLine();
-				if(str == null) {
-					break;
-				}
-//				스트링토큰을 이용해서 구현하기
-				StringTokenizer token = new StringTokenizer(str,",");
-				r1 = new Room(Integer.parseInt(token.nextToken()), token.nextToken(), Integer.parseInt(token.nextToken()), token.nextToken());
-				roomList.add(r1);
-//				split를 이용해서 구현하기
-//				String[] list = str.split(",");
-//				r1 = new Room(Integer.parseInt(list[0]), list[1], Integer.parseInt(list[2]), list[3]);
-//				roomList.add(r1);
-			}
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally{
-			try {
-				read.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		Room r1 = new Room(101, "소나무", 20000, "사는 방");
+		Room r2 = new Room(102, "참나무", 20000, "사는 방");
+		Room r3 = new Room(103, "동백나무", 20000, "사는 방");
+		Room r4 = new Room(104, "벚나무", 20000, "사는 방");
+		Room r5 = new Room(105, "은행나무", 20000, "사는 방");
 		
+		roomList.add(r1);
+		roomList.add(r2);
+		roomList.add(r3);
+		roomList.add(r4);
+		roomList.add(r5);
 	}
 	
 //	msg를 던져주고 int를 반환하는 메소드
@@ -195,7 +154,7 @@ public class RoomControl {
 	}
 	
 //	예약자의 정보를 담는 메소드
-	private static void reservation(int roomNum, String customer, String revCode, List<Reservation> roomRes) {
+	private static void room(int roomNum, String customer, String revCode, List<Reservation> roomRes) {
 		roomRes.add(new Reservation(roomNum, customer, revCode));
 	}
 	
@@ -214,7 +173,6 @@ public class RoomControl {
 		for (int i = 0; i < roomlist.size(); i++) {
 			if(roomNum == roomlist.get(i).getRoomNum()) {
 				num = i;
-				break;
 			}
 		}
 		return num;
@@ -226,7 +184,6 @@ public class RoomControl {
 		for(int i = 0; i < reslist.size(); i++) {
 			if(name.equals(reslist.get(i).getCustomer())) {
 				index = i;
-				break;
 			}
 		}
 		return index;
