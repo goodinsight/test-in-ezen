@@ -2,22 +2,31 @@ package kr.co.dong;
 
 public class Test09 {
 	public static void main(String[] args) {
-		String my_string = "rermgorpsam";
-		String answer = my_string;
-		int[] index_list = new int[] {2, 3};
-		int s = index_list[0];
-		int e = index_list[1];
-		
-		StringBuffer sb1 = new StringBuffer(answer);
-        String str = sb1.substring(s, e+1);
-        StringBuffer sb2 = new StringBuffer(str);
-        System.out.println("sb2="+sb2);
-        sb2.reverse();
-        StringBuffer str2 = sb2;
-        System.out.println("str2="+str2);
-        String str3 = str2.toString();
-        sb1.replace(s, e+1, str3);
-        answer = sb1.toString();
+		String answer = "";
+        int mode = 0;
+        String ret = "";
+        String code = "abc1abc1abc";
+        
+        for (int idx = 0; idx < code.length(); idx++){
+            if (mode == 0) {
+                if (code.charAt(idx) != '1') {
+                    if (idx % 2 == 0) {
+                        ret += code.charAt(idx);
+                    }
+                } else{
+                    mode = 1;
+                }
+            } else if (mode == 1) {
+                if (code.charAt(idx) != '1') {
+                    if (idx % 2 == 1) {
+                        ret += code.charAt(idx);
+                    }
+                } else{
+                    mode = 0;
+                }
+            }
+        }
+        answer  = ret;
         System.out.println(answer);
 	}
 }

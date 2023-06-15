@@ -1,63 +1,38 @@
 package kr.co.dong;
 
+import java.util.Scanner;
+
 public class Test08 {
+
 	public static void main(String[] args) {
-		int a = 2, b =5, c=2, d=6;
+//		두 수를 입력받아 큰 수를 출력하시오.
 		
-		int answer = 1000*a + 100*b + 10*c + d;
-		String tmp = Integer.toString(answer);
-        int length_a = tmp.replace(String.valueOf(a),"").length();
-        int length_b = tmp.replace(String.valueOf(b),"").length();
-        int length_c = tmp.replace(String.valueOf(c),"").length();
-        int length_d = tmp.replace(String.valueOf(d),"").length();
-        
-        int sumOfLength = length_a + length_b + length_c + length_d;
-        
-        if (sumOfLength == 0){
-            answer = 1111*a;
-        } else if(sumOfLength == 6){
-            if (length_a == 3){
-                answer = (10*b + a) * (10*b + a);
-            }else if(length_b == 3){
-                answer = (10*a + b) * (10*a + b);
-            }else if(length_c == 3){
-                answer = (10*a + c) * (10*a + c);
-            }else{
-                answer = (10*a + d) * (10*a + d);
-            }
-        } else if(sumOfLength == 8){
-            if (a == b){
-                if (a > c){
-                    answer = a*a - c*c;
-                }else answer = c*c - a*a;
-             }else {
-                if (a > b){
-                    answer = a*a - b*b;
-                }else answer = b*b - a*a;
-            }
-        } else if(sumOfLength == 10){
-            if (a == b){
-                answer = c*d;
-            }else if(a == c){
-                answer = b*d;
-            }else if(a == d){
-                answer = b*c;
-            }else if(b == c){
-                answer = a*d;
-            }else if(b == d){
-                answer = a*c;
-            }else{
-                answer = a*b;
-            }
-        } else{
-            if (a>=3 && b>=3 && c>=3 && d>=3){
-                answer = 3;
-            }else if (a==1 || b==1 || c==1 || d==1){
-                answer = 1;
-            }else{
-                answer = 2;
-            }
-        }
-        System.out.println(answer);
+		/*
+		Scanner scan = new Scanner(System.in);
+		int A = scan.nextInt();
+		int B = scan.nextInt();
+		
+		if (A >= B) {
+			System.out.println(A);
+		} else {
+			System.out.println(B);
+		}
+		*/
+		
+//		응용 : 3개 받아서 큰 수 출력
+		
+		Scanner scan = new Scanner(System.in);
+		int A = scan.nextInt();
+		int B = scan.nextInt();
+		int C = scan.nextInt();
+		
+		if (A >= B && A >= C) {
+			System.out.println(A);
+		} else if (B >= A && B >= C) {
+			System.out.println(B);
+		} else {
+			System.out.println(C);
+		}
 	}
+
 }
