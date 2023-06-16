@@ -1,0 +1,41 @@
+182p
+Array 배열
+리스트 
+
+자료구조
+Stack - 푸시 팝
+Queue - add remove
+List
+-ArrayList ㅁㅁㅁㅁㅁㅁㅁㅁㅁ  // 보관이 용이해 
+-linked List ㅁ->ㅁ->ㅁ-> // 수정/추가 용이
+Map집합Set중복허용
+Tree
+
+맵과 리스트☆
+
+맵
+Key/Value
+이름 홍길동
+키 162
+몸 50
+JSON 문서타입
+{"이름":"홍길동",
+"키": 162,
+"몸":50,
+"취미":["잠","운동"}
+
+
+int[] num = null;
+num = new int[8];
+
+num[1]=20;
+num[2]=30;
+0 ~ length-1
+
+188p
+변수명.length
+
+리스트 정리
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+https://shindro.tistory.com/30 자바 클래스(Class).. C의 구조체(Struct)랑 뭐가 다를까??
+https://dev-coco.tistory.com/164

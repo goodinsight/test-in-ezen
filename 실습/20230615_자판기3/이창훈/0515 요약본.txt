@@ -1,0 +1,11 @@
+while 반복 횟수를 잘 알수없을때
+
+for
+(i%2!=0 && i%3!=0) ====> !(1%2==0\\i%3==0)
+
+n=-n == 1 -1 1 -1 1 -1
+
+'0'
+
+원본데이터 보존이 중요
+https://madnix.tistory.com/entry/%EC%95%84%EA%B7%9C%EB%A8%BC%ED%8A%B8argument-%EC%99%80-%ED%8C%8C%EB%9D%BC%EB%AF%B8%ED%84%B0parameter-%EC%9D%98-%EC%B0%A8%EC%9D%B4
