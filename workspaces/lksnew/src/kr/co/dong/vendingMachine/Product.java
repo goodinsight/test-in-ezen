@@ -13,6 +13,13 @@ public class Product{
 		serialNumber++;
 	}
 	
+	public Product(String name, int price) {
+		serialNumber++;
+		this.serialNo = Product.serialNumber + 1;
+		this.name = name;
+		this.price = price;
+
+	}
 	public Product(String category, String name, int price, String contents) {
 		serialNumber++;
 		this.serialNo = Product.serialNumber + 1;
