@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `goods` (
    
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `goods`.`goods` (`gname`, `gcontent`, `gcnt`, `getc`) VALUES
+INSERT INTO `testdb`.`goods` (`gname`, `gcontent`, `gcnt`, `getc`) VALUES
 ('장난감', '제품설명', 10, '추가설명'),
 ('장난감2', '제품설명2', 5, '추가설명2'),
 ('장난감3', '제품설명3', 6, '추가설명3');
