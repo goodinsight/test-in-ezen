@@ -72,7 +72,27 @@ public class BoardDAOimpl implements BoardDAO{
 	@Override
 	public BoardBean selectOne(int bid) {
 		// 글 번호로 조회
-		return null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		BoardBean bb = null;
+		LocalDateTime time = LocalDateTime.now();
+		try {
+			String sql = "SELECT * FROM mydb.article ";
+				   sql += "WHERE bid = " + bid;
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				bb = new BoardBean(rs.getString(1), rs.getString(2), rs.getTimestamp(3).toLocalDateTime(), rs.getString(4));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return bb;
 	}
 
 	@Override

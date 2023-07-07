@@ -37,7 +37,10 @@ public class BoardBean {
 	
 	public BoardBean(String title, String content, String createdBy) {
 		LocalDateTime createdAt = LocalDateTime.now();
-		new BoardBean(title, content, createdAt, createdBy);
+		this.title = title;
+		this.content = content;
+		this.createdAt = createdAt;
+		this.createdBy = createdBy;
 	}
 	
 	public int getAid() {
@@ -81,6 +84,11 @@ public class BoardBean {
 	}
 	public void setModifiedBy(String modifiedBy) {
 		this.modifiedBy = modifiedBy;
+	}
+	@Override
+	public String toString() {
+		return "BoardBean [aid=" + aid + ", title=" + title + ", content=" + content + ", createdAt=" + createdAt
+				+ ", createdBy=" + createdBy + ", modifiedAt=" + modifiedAt + ", modifiedBy=" + modifiedBy + "]";
 	}
 	
 	
