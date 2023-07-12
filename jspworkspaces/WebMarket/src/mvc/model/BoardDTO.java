@@ -13,6 +13,19 @@ public class BoardDTO {
 	public BoardDTO() {
 		super();		
 	}
+	
+	
+
+	public BoardDTO(String id, String name, String subject, String content, String regist_day) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.subject = subject;
+		this.content = content;
+		this.regist_day = regist_day;
+	}
+
+
 
 	public int getNum() {
 		return num;

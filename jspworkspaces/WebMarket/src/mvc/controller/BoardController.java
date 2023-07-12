@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import mvc.model.BoardDAO;
 import mvc.model.BoardDTO;
@@ -30,36 +31,37 @@ public class BoardController extends HttpServlet {
 		response.setContentType("text/html; charset=utf-8");
 		request.setCharacterEncoding("utf-8");
 	
-		if (command.equals("/BoardListAction.do")) {//µî·ÏµÈ ±Û ¸ñ·Ï ÆäÀÌÁö Ãâ·ÂÇÏ±â
+		if (command.equals("/BoardListAction.do")) {//ï¿½ï¿½Ïµï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
 			requestBoardList(request);
 			RequestDispatcher rd = request.getRequestDispatcher("./board/list.jsp");
 			rd.forward(request, response);
-		} else if (command.equals("/BoardWriteForm.do")) { // ±Û µî·Ï ÆäÀÌÁö Ãâ·ÂÇÏ±â
+		} else if (command.equals("/BoardWriteForm.do")) { // ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
 				requestLoginName(request);
 				RequestDispatcher rd = request.getRequestDispatcher("./board/writeForm.jsp");
-				rd.forward(request, response);				
-		} else if (command.equals("/BoardWriteAction.do")) {// »õ·Î¿î ±Û µî·ÏÇÏ±â
+				rd.forward(request, response);
+		} else if (command.equals("/BoardWriteAction.do")) {// ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
 				requestBoardWrite(request);
-				RequestDispatcher rd = request.getRequestDispatcher("/BoardListAction.do");
-				rd.forward(request, response);						
-		} else if (command.equals("/BoardViewAction.do")) {//¼±ÅÃµÈ ±Û »ó¼¼ ÆäÀÌÁö °¡Á®¿À±â
+//				RequestDispatcher rd = request.getRequestDispatcher("/BoardListAction.do");
+//				rd.forward(request, response);
+				response.sendRedirect("./BoardListAction.do");
+		} else if (command.equals("/BoardViewAction.do")) {//ï¿½ï¿½ï¿½Ãµï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				requestBoardView(request);
 				RequestDispatcher rd = request.getRequestDispatcher("/BoardView.do");
 				rd.forward(request, response);						
-		} else if (command.equals("/BoardView.do")) { //±Û »ó¼¼ ÆäÀÌÁö Ãâ·ÂÇÏ±â
+		} else if (command.equals("/BoardView.do")) { //ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
 				RequestDispatcher rd = request.getRequestDispatcher("./board/view.jsp");
 				rd.forward(request, response);	
-		} else if (command.equals("/BoardUpdateAction.do")) { //¼±ÅÃµÈ ±ÛÀÇ Á¶È¸¼ö Áõ°¡ÇÏ±â
+		} else if (command.equals("/BoardUpdateAction.do")) { //ï¿½ï¿½ï¿½Ãµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
 				requestBoardUpdate(request);
 				RequestDispatcher rd = request.getRequestDispatcher("/BoardListAction.do");
 				rd.forward(request, response);
-		}else if (command.equals("/BoardDeleteAction.do")) { //¼±ÅÃµÈ ±Û »èÁ¦ÇÏ±â
+		}else if (command.equals("/BoardDeleteAction.do")) { //ï¿½ï¿½ï¿½Ãµï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
 				requestBoardDelete(request);
 				RequestDispatcher rd = request.getRequestDispatcher("/BoardListAction.do");
 				rd.forward(request, response);				
 		} 
 	}
-	//µî·ÏµÈ ±Û ¸ñ·Ï °¡Á®¿À±â	
+	//ï¿½ï¿½Ïµï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½	
 	public void requestBoardList(HttpServletRequest request){
 			
 		BoardDAO dao = BoardDAO.getInstance();
@@ -94,7 +96,7 @@ public class BoardController extends HttpServlet {
 		request.setAttribute("total_record",total_record); 
 		request.setAttribute("boardlist", boardlist);								
 	}
-	//ÀÎÁõµÈ »ç¿ëÀÚ¸í °¡Á®¿À±â
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ú¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public void requestLoginName(HttpServletRequest request){
 					
 		String id = request.getParameter("id");
@@ -105,7 +107,7 @@ public class BoardController extends HttpServlet {
 		
 		request.setAttribute("name", name);									
 	}
-	// »õ·Î¿î ±Û µî·ÏÇÏ±â
+	// ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
 	public void requestBoardWrite(HttpServletRequest request){
 					
 		BoardDAO dao = BoardDAO.getInstance();		
@@ -128,7 +130,7 @@ public class BoardController extends HttpServlet {
 		
 		dao.insertBoard(board);								
 	}
-	//¼±ÅÃµÈ ±Û »ó¼¼ ÆäÀÌÁö °¡Á®¿À±â
+	//ï¿½ï¿½ï¿½Ãµï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public void requestBoardView(HttpServletRequest request){
 					
 		BoardDAO dao = BoardDAO.getInstance();
@@ -142,7 +144,7 @@ public class BoardController extends HttpServlet {
    		request.setAttribute("page", pageNum); 
    		request.setAttribute("board", board);   									
 	}
-	//¼±ÅÃµÈ ±Û ³»¿ë ¼öÁ¤ÇÏ±â
+	//ï¿½ï¿½ï¿½Ãµï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
 	public void requestBoardUpdate(HttpServletRequest request){
 					
 		int num = Integer.parseInt(request.getParameter("num"));
@@ -165,7 +167,7 @@ public class BoardController extends HttpServlet {
 		
 		 dao.updateBoard(board);								
 	}
-	//¼±ÅÃµÈ ±Û »èÁ¦ÇÏ±â
+	//ï¿½ï¿½ï¿½Ãµï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
 	public void requestBoardDelete(HttpServletRequest request){
 					
 		int num = Integer.parseInt(request.getParameter("num"));

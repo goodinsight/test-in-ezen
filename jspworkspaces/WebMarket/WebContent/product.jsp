@@ -2,7 +2,6 @@
 <%@ page import="java.sql.PreparedStatement"%>
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ page import="dto.Product"%>
-<%@ page import="dao.ProductRepository"%>
 <%@ page errorPage="exceptionNoProductId.jsp"%>
 <html>
 <head>

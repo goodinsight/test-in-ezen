@@ -14,4 +14,3 @@ create table member (
 ) default CHARSET=utf8;
 
 select * from member;
-drop table member;

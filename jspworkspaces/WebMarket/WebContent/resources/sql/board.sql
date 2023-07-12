@@ -12,4 +12,3 @@ CREATE TABLE board (
 
 select * from board;
 desc board;
-drop table board;

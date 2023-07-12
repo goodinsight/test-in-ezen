@@ -2,12 +2,22 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="mvc.model.BoardDTO"%>
+<%@ page import="mvc.model.BoardDAO"%>
 <%
 	String sessionId = (String) session.getAttribute("sessionId");
 	List boardList = (List) request.getAttribute("boardlist");
-	int total_record = ((Integer) request.getAttribute("total_record")).intValue();
-	int pageNum = ((Integer) request.getAttribute("pageNum")).intValue();
-	int total_page = ((Integer) request.getAttribute("total_page")).intValue();
+	//if(boardList == null){
+	//	Date currentDatetime = new Date(System.currentTimeMillis());
+	//	java.sql.Date sqlDate = new java.sql.Date(currentDatetime.getTime());
+	//	java.sql.Timestamp timestamp = new java.sql.Timestamp(currentDatetime.getTime());
+	//	BoardDAO.getInstance().insertBoard(new BoardDTO("admin", "관리자", "회원가입을 축하합니다", "회원가입을 축하합니다", timestamp.toString()));
+	//	boardList = BoardDAO.getInstance().getBoardList(pageNum, 20, "id", sessionId);
+	//	out.println(boardList);
+	//}else{
+	int	total_record = ((Integer) request.getAttribute("total_record")).intValue();
+	int	pageNum = ((Integer) request.getAttribute("pageNum")).intValue();
+	int	total_page = ((Integer) request.getAttribute("total_page")).intValue();
+	//}
 %>
 <html>
 <head>
