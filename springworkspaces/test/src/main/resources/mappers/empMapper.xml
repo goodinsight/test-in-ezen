@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.test.empMapper">
+  <select id="listAll" resultType="kr.co.test.emp.EmpDTO">
+    select * from emp
+  </select>
+  <select id="selectOne" parameterType="int" resultType="kr.co.test.emp.EmpDTO">
+  	select * from emp
+	where empno = #{empno}
+  </select>
+  <select id="insert" parameterType="kr.co.test.emp.EmpDTO" resultType="int">
+  	insert into emp(empno, ename, job, mgr, hiredate, sal, comm, deptno)
+	values (#{empno}, #{ename}, #{job}, #{mgr}, #{hiredate}, #{sal}, #{comm}, #{deptno})
+  </select>
+  <select id="update" parameterType="kr.co.test.emp.EmpDTO" resultType="int">
+  	update emp
+  	set ename = #{ename}, job = #{job}, mgr = #{mgr}, hiredate = #{hiredate}, sal=#{sal},  comm=#{comm}, deptno= #{deptno}
+	where empno = #{empno}
+  </select>
+  <select id="delete" parameterType="int" resultType="int">
+  	delete from emp
+	where empno = #{empno}
+  </select>
+</mapper>

@@ -1,0 +1,56 @@
+package kr.co.dong.VO;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import kr.co.dong.DTO.MovieDTO;
+
+public class MovieVO {
+
+	private int m_number;
+	private String m_name;
+	private String m_opening;
+	private String m_reopening;
+	private String m_runtime;
+	private String m_director;
+	private String m_actor;
+	private String m_attendance;
+	private String m_awards;
+	private String m_grade;
+	private String m_genre;
+	private int m_age;
+	private String m_nation;
+		
+	public MovieDTO getDto() {
+		return dto;
+	}
+	public void setDto(MovieDTO dto) {
+		this.dto = dto;
+	}
+	public String getM_genre() {
+		return m_genre;
+	}
+	public void setM_genre(String m_genre) {
+		this.m_genre = m_genre;
+	}
+	public int getM_age() {
+		return m_age;
+	}
+	public void setM_age(int m_age) {
+		this.m_age = m_age;
+	}
+	public String getM_nation() {
+		return m_nation;
+	}
+	public void setM_nation(String m_nation) {
+		this.m_nation = m_nation;
+	}
+	@Override
+	public String toString() {
+		return "MovieVO [ m_genre="
+				+ m_genre + ", m_age=" + m_age + ", m_nation=" + m_nation + "]";
+	}
+	
+	
+	
+}

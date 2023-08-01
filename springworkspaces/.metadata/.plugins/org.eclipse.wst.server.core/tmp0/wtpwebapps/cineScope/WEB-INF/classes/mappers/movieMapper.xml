@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="kr.co.dong.movieMapper"> 
+	<select id="movie_search" resultType="int">
+		select m_number from movie where m_name = #{m_name}
+	</select>
+	
+	<select id="movie_detail" resultType="movieDTO">
+		select m_name, m_opening, m_reopening, m_runtime, m_grade, m_director, m_actor, m_attendance, m_awards from movie where m_number = #{m_number}
+	</select>
+	
+	<select id="movie_all" resultType="movieDTO">
+		select * from movie
+	</select>
+	
+	<select id="movie_searchAll" parameterType="kr.co.dong.VO.MovieVO" resultType="int">
+		select m_number from movie where m_name like concat('%',#{m_name},'%') and
+		m_opening &gt; #{m_opening} and
+		m_reopening &gt; #{m_reopening} and
+		m_runtime &gt; #{m_runtime} and
+		m_grade &gt; #{m_grade} and
+		m_director like concat('%',#{m_director},'%') and
+		m_actor like concat('%',#{m_actor},'%') and 
+		m_attendance &gt; #{m_attendance} and
+		m_awards like concat('%',#{m_awards},'%')
+	</select>
+	
+  </mapper>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="kr.co.dong.genreMapper"> 
+	<select id="genre_search" resultType="String">
+		select m_genre from genre where FK_m_number = #{FK_m_number}
+	</select>
+	
+		<select id="genre_searchMovie" resultType="int">
+		select FK_m_number from genre where m_genre = #{m_genre}
+	</select>
+  </mapper>

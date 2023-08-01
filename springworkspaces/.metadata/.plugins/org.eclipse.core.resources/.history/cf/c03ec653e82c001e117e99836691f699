@@ -1,0 +1,54 @@
+package kr.co.dong.serviceImpl;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import kr.co.dong.DAO.AgeDAO;
+import kr.co.dong.DAO.GenreDAO;
+import kr.co.dong.DAO.MovieDAO;
+import kr.co.dong.DAO.NationDAO;
+import kr.co.dong.VO.MovieVO;
+import kr.co.dong.VO.MovieVO;
+import kr.co.dong.service.SearchService;
+
+@Service
+public class SearchServiceImpl implements SearchService{
+	@Autowired
+	private GenreDAO genreDAO;
+	@Autowired
+	private AgeDAO ageDAO;
+	@Autowired
+	private NationDAO natinoDAO;
+	@Autowired
+	private MovieDAO movieDAO;
+	
+	@Override
+	public List<Integer> searchCollectAll(MovieVO mVo) {
+		// movie 컬럼별 해당되는 값과 매치되는 것을 찾아줌
+		List<MovieVO> list = movieDAO.searchAll(mVo);
+		return null;
+	}
+
+
+	@Override
+	public List<Integer> searchAllM_age(int m_age) {
+		// movie 연령제한별 영화정보 전체 검색
+		return ageDAO.searchMovie(m_age);
+	}
+
+	@Override
+	public List<Integer> searchAllM_genre(String m_genre) {
+		// movie 장르별 영화정보 전체 검색
+		return genreDAO.searchMovie(m_genre);
+	}
+
+	@Override
+	public List<Integer> searchAllM_nation(String m_nation) {
+		// movie 국가별 영화정보 전체 검색
+		return natinoDAO.searchMovie(m_nation);
+	}
+
+}

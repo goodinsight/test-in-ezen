@@ -1,0 +1,29 @@
+package kr.co.dong.VO;
+
+import kr.co.dong.DTO.MovieDTO;
+
+public class MovieVO extends MovieDTO{
+
+	private String m_genre;
+	private int m_age;
+	private String m_nation;
+	public String getM_genre() {
+		return m_genre;
+	}
+	public void setM_genre(String m_genre) {
+		this.m_genre = m_genre;
+	}
+	public int getM_age() {
+		return m_age;
+	}
+	public void setM_age(int m_age) {
+		this.m_age = m_age;
+	}
+	public String getM_nation() {
+		return m_nation;
+	}
+	public void setM_nation(String m_nation) {
+		this.m_nation = m_nation;
+	}
+	
+}

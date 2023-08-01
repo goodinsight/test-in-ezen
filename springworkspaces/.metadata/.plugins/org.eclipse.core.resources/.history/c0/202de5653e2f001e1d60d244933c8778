@@ -1,0 +1,19 @@
+package kr.co.dong.DAO;
+
+<<<<<<< HEAD
+import kr.co.dong.DTO.UserfavoriteDTO;
+public interface UserfavoriteDAO {
+	   public UserfavoriteDTO favCheck(int u_number);
+=======
+import java.util.List;
+
+import org.springframework.stereotype.Repository;
+
+import kr.co.dong.DTO.UserfavoriteDTO;
+public interface UserfavoriteDAO {
+	   public List<UserfavoriteDTO> favCheck(int u_number);
+>>>>>>> 1ef6110248f4b6d6f9f67bd6b44a9c4758368f3e
+	   public void favAdd(UserfavoriteDTO dto);
+	   public void favDelete(int uf_number);
+	   public int favLikeMovie(int FK_u_number);
+}

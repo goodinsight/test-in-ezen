@@ -1,0 +1,10 @@
+package kr.co.dong.DAO;
+
+import java.util.List;
+
+import org.springframework.stereotype.Repository;
+
+public interface GenreDAO {
+	public String search(int m_number);
+	public List<Integer> searchMovie(String m_genre);
+}

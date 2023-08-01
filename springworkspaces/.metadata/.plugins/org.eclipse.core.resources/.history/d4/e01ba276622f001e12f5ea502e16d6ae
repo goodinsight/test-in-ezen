@@ -1,0 +1,12 @@
+package kr.co.dong.DAO;
+
+import java.util.List;
+
+import kr.co.dong.DTO.MovieDTO;
+import kr.co.dong.VO.MovieVO;
+public interface MovieDAO {
+	public int search(String m_name);
+	public MovieDTO detail(int m_number);
+	public List<MovieDTO> listAll();
+	public List<MovieVO> searchAll(MovieVO mVo);
+}

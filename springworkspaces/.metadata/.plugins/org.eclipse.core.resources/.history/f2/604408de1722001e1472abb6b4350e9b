@@ -1,0 +1,5 @@
+package kr.co.dong4.emp;
+
+public class EmpDAOImpl {
+
+}

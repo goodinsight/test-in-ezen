@@ -1,0 +1,45 @@
+1690419379903	Delete element
+1690419587102	Copy compilation unit
+1690419648768	Rename type 'adminDAO'
+1690419652461	Rename type 'ageDAO'
+1690419657137	Rename type 'articleDAO'
+1690419661873	Rename type 'boardDAO'
+1690419667346	Rename type 'genreDAO'
+1690419670683	Rename type 'movieDAO'
+1690419674134	Rename type 'nationDAO'
+1690419677471	Rename type 'userDAO'
+1690419680857	Rename type 'userfavoriteDAO'
+1690419685438	Rename type 'adminDAOImpl'
+1690419688329	Rename type 'ageDAOImpl'
+1690419691121	Rename type 'articleDAOImpl'
+1690419695363	Rename type 'boardDAOImpl'
+1690419698276	Rename type 'genreDAOImpl'
+1690419701993	Rename type 'movieDAOImpl'
+1690419704829	Rename type 'nationDAOImpl'
+1690419707688	Rename type 'userDAOImpl'
+1690419710867	Rename type 'userfavoriteDAOImpl'
+1690419714876	Rename type 'adminDTO'
+1690419717650	Rename type 'ageDTO'
+1690419720482	Rename type 'articleDTO'
+1690419723646	Rename type 'boardDTO'
+1690419726158	Rename type 'genreDTO'
+1690419729078	Rename type 'movieDTO'
+1690419731561	Rename type 'nationDTO'
+1690419734357	Rename type 'userDTO'
+1690419736960	Rename type 'userfavoriteDTO'
+1690419742038	Rename type 'accountService'
+1690419745153	Rename type 'boardService'
+1690419749068	Rename type 'mainService'
+1690419754877	Rename type 'movieDetailService'
+1690420115472	Rename type 'profileService'
+1690420118109	Rename type 'searchService'
+1690420207389	Rename type 'movieDetailServiceImpl'
+1690420211625	Rename type 'movieVO'
+1690421205045	Copy file
+1690421276155	Copy compilation unit
+1690421986643	Copy compilation unit
+1690422429869	Delete element
+1690423761652	Delete element
+1690423767042	Delete element
+1690425798752	Delete element
+1690436862687	Rename resource 'age.jsp'

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="kr.co.dong.ageMapper"> 
+	<select id="age_search" resultType="int">
+		select m_age from age where FK_m_number = #{FK_m_number}
+	</select>
+	
+	<select id="age_searchMovie" parameterType="Map" resultType="int">
+		select FK_m_number from age where m_age &gt; #{bottom} and m_age &lt; #{top}
+	</select>
+  </mapper>

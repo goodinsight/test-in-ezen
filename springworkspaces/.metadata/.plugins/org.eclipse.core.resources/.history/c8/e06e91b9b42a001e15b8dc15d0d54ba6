@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.test.boardMapper">
+  <!-- 로그인 처리를 위한 SQL -->
+  <select id="login" parameterType="java.util.Map" resultType="java.util.Map">
+    SELECT id, name
+	FROM springuser
+	WHERE id=#{id } and password=#{password }
+  </select>
+  <select id="list" resultType="kr.co.test.board.BoardDTO">
+    SELECT * FROM board
+    Order by bno desc
+	
+  </select>
+  <select id="detail" parameterType="int" resultType="kr.co.test.board.BoardDTO">
+    SELECT * FROM board
+	where bno = #{bno }
+  </select>
+  <select id="register" parameterType="kr.co.test.board.BoardDTO" resultType="int">
+    INSERT INTO board(title, content, id, regdate)
+	VALUES (#{title }, #{content}, #{id}, #{regdate})
+  </select>
+  <select id="update" parameterType="kr.co.test.board.BoardDTO" resultType="int">
+    UPDATE board
+    SET (title = #{title }, content = #{content}, id = #{id})
+	WHERE bno = #{bno}
+  </select>
+  <select id="delete" parameterType="int" resultType="int">
+    delete FROM board
+	where bno = #{bno }
+  </select>
+</mapper>
