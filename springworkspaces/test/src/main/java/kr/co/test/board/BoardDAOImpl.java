@@ -50,4 +50,34 @@ public class BoardDAOImpl implements BoardDAO{
 		return sqlSession.delete(namespace+".delete", bno);
 	}
 
+	@Override
+	public int reply(BoardReply boardReply) {
+		// 댓글 쓰기를 위한 메소드
+		return sqlSession.insert(namespace+".reply", boardReply);
+	}
+
+	@Override
+	public List<BoardReply> getDetail1(int bno) {
+		//게시물번호에 해당하는 댓글 조회
+		return sqlSession.selectList(namespace+".detail1", bno);
+	}
+
+	@Override
+	public BoardReply detailReply(int reno) {
+		// 댓글 보기를 위한 메소드
+		return sqlSession.selectOne(namespace+".detailReply", reno);
+	}
+
+	@Override
+	public int replyUpdate(BoardReply boardReply) {
+		// 댓글 수정을 처리하기 위한 메소드
+		return sqlSession.update(namespace+".replyUpdate", boardReply);
+	}
+
+	@Override
+	public int replyDelete(int reno) {
+		// 댓글 삭제를 처리하기 위한 메소드
+		return sqlSession.delete(namespace+".replyDelete", reno);
+	}
+
 }

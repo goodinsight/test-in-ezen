@@ -200,3 +200,17 @@
 
 8월 01, 2023 14:04:28.34 NEW SESSION
 8월 01, 2023 14:04:28.34 [888:11208:0801/140428.033:ERROR:feature_processor_state.cc(39)] Processing error occured: model WebAppInstallationPromo failed with UkmEngineDisabled, message: 
+8월 01, 2023 16:31:48.358 [888:7608:0801/163148.357:ERROR:backend_impl.cc(1040)] Critical error found -8
+
+8월 02, 2023 09:20:20.96 NEW SESSION
+8월 02, 2023 09:20:20.96 [8860:1864:0802/092020.093:ERROR:feature_processor_state.cc(39)] Processing error occured: model WebAppInstallationPromo failed with UkmEngineDisabled, message: 
+8월 02, 2023 09:21:12.362 [8860:1864:0802/092112.361:ERROR:gpu_disk_cache.cc(216)] Failed to create blob cache entry: -2
+8월 02, 2023 12:45:52.375 [8860:1864:0802/124552.375:ERROR:interface_endpoint_client.cc(702)] Message 1 rejected by interface blink.mojom.WidgetHost
+
+8월 03, 2023 09:03:52.217 NEW SESSION
+8월 03, 2023 09:03:52.217 [5716:8488:0803/090352.216:ERROR:usb_descriptors.cc(117)] Failed to read configuration descriptor.
+8월 03, 2023 09:03:52.218 [5716:8488:0803/090352.216:ERROR:usb_descriptors.cc(100)] Failed to read all configuration descriptors. Expected 1, got 0.
+8월 03, 2023 09:03:52.219 [5716:8488:0803/090352.216:ERROR:device_event_log_impl.cc(222)] [09:03:52.216] USB: usb_device_win.cc:95 Failed to read descriptors from \\?\usb#vid_275d&pid_0ba6#6&df2ee03&0&2#{a5dcbf10-6530-11d2-901f-00c04fb951ed}.
+8월 03, 2023 09:03:53.68 [5716:8488:0803/090353.068:ERROR:feature_processor_state.cc(39)] Processing error occured: model WebAppInstallationPromo failed with UkmEngineDisabled, message: 
+8월 03, 2023 09:05:24.328 [8884:9720:0803/090524.328:ERROR:feature_processor_state.cc(39)] Processing error occured: model WebAppInstallationPromo failed with UkmEngineDisabled, message: 
+8월 03, 2023 11:55:31.252 [8884:9720:0803/115531.252:ERROR:interface_endpoint_client.cc(702)] Message 1 rejected by interface blink.mojom.WidgetHost

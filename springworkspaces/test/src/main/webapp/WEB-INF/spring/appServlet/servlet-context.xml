@@ -3,9 +3,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -23,6 +25,21 @@
 	
 	<context:component-scan base-package="kr.co.test" />
 	
+	<!-- AOP실행을 위해 컴포턴트 등록 -->
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	
+	<!-- 인터셉터 설정 -->
+	<beans:bean class="kr.co.test.common.AuthenticationInterceptor" id="auth" />
+	<!-- 인터셉터를 위한 매핑경로 설정하여 auth의 메소드를 수행하게 한다. -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/board/register"/>
+			<mapping path="/board/detail"/>
+			<mapping path="/board/update"/>
+			<mapping path="/board/delete"/>
+			<beans:ref bean="auth" />
+		</interceptor>
+	</interceptors>
 	
 	
 </beans:beans>

@@ -31,4 +31,36 @@
     delete FROM board
 	where bno = #{bno }
   </select>
+  <!-- 해당 게시글번호에 댓글 조회하는 SQL 댓글리스트-->
+  <select id="detail1" parameterType="int" resultType="BoardReply">
+  	select *
+  	from board_reply
+  	where bno = #{bno}
+  
+  </select>
+  <!-- 댓글쓰기 -->
+  <insert id="reply" parameterType="BoardReply">
+  	insert into
+  	board_reply(reno, rewriter, rememo, redate, bno)
+  	values (#{reno},#{rewriter}, #{rememo}, curdate(), #{bno})
+  </insert>
+  <!-- 해당 댓글 조회 SQL -->
+  <select id="detailReply" parameterType="int" resultType="BoardReply">
+  	select *
+  	from board_reply
+  	where reno = #{reno}
+  </select>
+  <!-- 댓글 수정 -->
+  <update id="replyUpdate" parameterType="BoardReply">
+  	update board_reply
+  	set rewriter = #{rewriter}, rememo = #{rememo}, redate = curdate()
+  	where reno = #{reno}
+  </update>
+  <!-- 댓글 삭제 -->
+  <delete id="replyDelete" parameterType="int">
+  	delete from board_reply
+  	where reno = #{reno}
+  </delete>
+  
+  
 </mapper>
