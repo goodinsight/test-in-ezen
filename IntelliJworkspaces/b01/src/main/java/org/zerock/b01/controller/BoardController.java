@@ -32,6 +32,7 @@ public class BoardController {
 
         PageResponseDTO<BoardListReplyCountDTO> responseDTO = boardService.listWithReplyCount(pageRequestDTO);
 
+        log.info(pageRequestDTO);
         log.info(responseDTO);
 
         model.addAttribute("responseDTO", responseDTO);

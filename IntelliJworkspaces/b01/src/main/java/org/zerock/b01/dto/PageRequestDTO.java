@@ -1,9 +1,6 @@
 package org.zerock.b01.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -36,12 +33,12 @@ public class PageRequestDTO {
         return type.split("");
     }
 
+
     public Pageable getPageable(String...props) {
         return PageRequest.of(this.page -1, this.size, Sort.by(props).descending());
     }
 
     public String getLink() {
-
         if(link == null) {
             StringBuilder builder = new StringBuilder();
             builder.append("page=" + this.page);
@@ -59,9 +56,6 @@ public class PageRequestDTO {
             }
             link = builder.toString();
         }
-
         return link;
-
     }
-
 }
