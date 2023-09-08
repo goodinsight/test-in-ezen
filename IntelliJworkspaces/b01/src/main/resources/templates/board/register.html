@@ -179,7 +179,7 @@
 
         for(let i = 0; i < uploadFiles.length; i++){
             const uploadFile = uploadFiles[i]
-            const imgLink = uploadFile.getAttribute("src")
+            const imgLink = uploadFile.getAttribute("data-src")  // 서비스에서 첨부파일 이름 db에 추가할때 이름을 배열로 처리 src가 아니고 data-src를 보내줘야됨
 
             str +=`<input type='hidden' name='fileNames' value="${imgLink}">`
         }

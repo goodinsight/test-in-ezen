@@ -37,6 +37,7 @@ public interface BoardService {
             boardDTO.getFileNames().forEach(fileName -> {
                 String[] arr = fileName.split("_");
                 board.addImage(arr[0], arr[1]);
+                //board.addImage(arr[1], arr[2]);
             });
         }
         return board;

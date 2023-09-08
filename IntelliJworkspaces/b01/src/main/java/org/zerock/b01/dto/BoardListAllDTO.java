@@ -20,7 +20,7 @@ public class BoardListAllDTO {
 
     private String writer;
 
-    private LocalDateTime redDate;
+    private LocalDateTime regDate;
 
     private Long replyCount;
 
